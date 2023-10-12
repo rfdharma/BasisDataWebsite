@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
-use Illuminate\Http\Request;
+use App\Models\Booking;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $items = Item::with(['type', 'brand'])->latest()->get(); // Mengambil semua item
+        $userBookings = Booking::with('item.brand', 'item.type')
+            ->where('user_id', auth()->user()->id)
+            ->get();
 
         return view('orders', [
-            'items' => $items,
+            'userBookings' => $userBookings,
         ]);
     }
-
 }
+
+

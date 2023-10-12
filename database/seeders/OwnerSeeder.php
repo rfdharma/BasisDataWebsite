@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DriverSeeder extends Seeder
+class OwnerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,10 @@ class DriverSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory()->create([
-            'name' => 'Driver',
-            'email' => 'driver@example.com',
+            'name' => 'Owner',
+            'email' => 'owner@gmail.com',
             'password' => bcrypt('password'),
-            'roles' => 'DRIVER'
+            'roles' => 'OWNER'
         ]);
     }
 }

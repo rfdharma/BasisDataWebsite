@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -47,7 +48,11 @@ class CheckoutController extends Controller
 		// Add 10% tax
 		$tax = $total_price * ($total_price * 0.10);
 
+
+        $uuid = now()->format('YmdHis') . auth()->user()->id;
+
         $booking = $item->bookings()->create([
+            'id' => $uuid,
             'user_id' => auth()->user()->id,
             'name' => $request->name,
             'start_date' => $start_date,

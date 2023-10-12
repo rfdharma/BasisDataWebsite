@@ -71,13 +71,13 @@
   </x-slot>
 
   <div class="py-12">
-    <div class="mx-auto max-w-8xl sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-8xl sm:px-auto lg:px-7">
       <div class="overflow-hidden shadow sm:rounded-md">
         <div class="bg-white px-4 py-5 sm:p-6">
           <table id="dataTable">
             <thead>
               <tr>
-                <th style="max-width: 1%">ID</th>
+                <th style="max-width: 1%">Invoice</th>
                 <th>User</th>
                 <th>Brand</th>
                 <th>Item</th>

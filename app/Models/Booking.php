@@ -11,6 +11,7 @@ class Booking extends Model
 	use HasFactory, SoftDeletes;
 
 	protected $fillable = [
+        'id',
 		'name',
 		'start_date',
 		'end_date',
@@ -32,7 +33,8 @@ class Booking extends Model
 		'end_date'
 	];
 
-	public function item()
+
+    public function item()
 	{
 		return $this->belongsTo(Item::class);
 	}
