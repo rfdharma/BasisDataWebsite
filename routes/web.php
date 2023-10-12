@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Front\CatalogController;
+use App\Http\Controllers\Front\OrderController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
@@ -40,7 +41,7 @@ Route::name('front.')->group(function () {
             }
         })->name('book.success');
 
-        Route::view('/orders','orders')->name('orders');
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
 //		Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 //		Route::get('/payment/{bookingId}', [PaymentController::class, 'index'])->name('payment');
