@@ -4,11 +4,6 @@
     <div class="flex h-16 justify-between">
       <div class="flex">
         <!-- Logo -->
-        <div class="flex shrink-0 items-center">
-          <a href="{{ route('admin.dashboard') }}">
-            <x-jet-application-mark class="block h-9 w-auto" />
-          </a>
-        </div>
 
         <!-- Navigation Links ADMINN-->
 {{--          @if(auth()->user()->roles == 'ADMIN')--}}
@@ -29,6 +24,11 @@
 {{--          @endif--}}
 
           @if(auth()->user()->roles == 'OWNER')
+              <div class="flex shrink-0 items-center">
+                  <a href="{{ route('owner.dashboard') }}">
+                      <x-jet-application-mark class="block h-9 w-auto" />
+                  </a>
+              </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                   <x-jet-nav-link href="{{ route('owner.dashboard') }}" :active="request()->routeIs('owner.dashboard')">
                       {{ __('Dashboard') }}
@@ -44,16 +44,19 @@
                   </x-jet-nav-link>
               </div>
           @elseif(auth()->user()->roles == 'ADMIN')
+              <div class="flex shrink-0 items-center">
+                  <a href="{{ route('admin.dashboard') }}">
+                      <x-jet-application-mark class="block h-9 w-auto" />
+                  </a>
+              </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                   <x-jet-nav-link href="{{ route('admin.bookings.index') }}" :active="request()->routeIs('admin.bookings.index')">
                       {{ __('Bookings') }}
                   </x-jet-nav-link>
               </div>
           @else
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                  <x-jet-nav-link href="{{ route('front.index') }}" :active="request()->routeIs('admin.dashboard')">
-                      {{ __('Dashboard') }}
-                  </x-jet-nav-link>
+              <div class="flex shrink-0 items-center">
+                  <a href="{{ route('front.index') }}" class="hover:bg-gray-200 hover:underline text-md font-bold rounded-[18px]" style="">Rental-in</a>
               </div>
           @endif
 

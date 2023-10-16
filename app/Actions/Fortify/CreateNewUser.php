@@ -40,7 +40,11 @@ class CreateNewUser implements CreatesNewUsers
         // Ubah hasilnya menjadi angka dengan panjang antara 1 hingga 10 digit.
         $id = abs(crc32($idCandidate)) % 10000000000;
         return User::create([
+<<<<<<< HEAD
+//            'id' => $id,
+=======
             'id' => $id,
+>>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
             'name' => $input['name'],
             'phone' => $input['phone'],
             'email' => $input['email'],

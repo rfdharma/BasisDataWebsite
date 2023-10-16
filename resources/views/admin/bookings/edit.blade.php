@@ -131,8 +131,8 @@
                     </label>
                     <select name="renturn_status"
                             class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none">
-                        <option value="pending" {{ $booking->return_status == 'not returned' ? 'selected' : '' }}>Pending</option>
-                        <option value="success" {{ $booking->return_status == 'returned' ? 'selected' : '' }}>Success</option>
+                        <option value="pending" {{ $booking->return_status == 'not returned' ? 'selected' : '' }}>Not Returned</option>
+                        <option value="success" {{ $booking->return_status == 'returned' ? 'selected' : '' }}>Returned</option>
                         <option value="expired" {{ $booking->return_status == 'expired' ? 'selected' : '' }}>Expired</option>
                     </select>
                     <div class="mt-2 text-sm text-gray-500">

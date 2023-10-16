@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
+use Illuminate\Support\Facades\View;
+=======
+>>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
 use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
@@ -13,14 +18,46 @@ class CheckoutController extends Controller
 	public function index(Request $request, $slug)
 	{
 		$item = Item::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
+        if (auth()->check()) {
+            // Pengguna diotentikasi
+            $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
+        } else {
+            // Pengguna tidak diotentikasi
+            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
+        }
 
+        if ($notification) {
+            if ($notification->isEmpty()) {
+                $notification = 'Tidak ada notifikasi.';
+            }
+        } else {
+            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
+        }
+        View::share('notification', $notification);
 		return view('checkout', [
 			'item' => $item,
+            'notification' => $notification
 		]);
 	}
 
 	public function store(Request $request, $slug)
 	{
+        if (auth()->check()) {
+            // Pengguna diotentikasi
+            $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
+        } else {
+            // Pengguna tidak diotentikasi
+            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
+        }
+
+        if ($notification) {
+            if ($notification->isEmpty()) {
+                $notification = 'Tidak ada notifikasi.';
+            }
+        } else {
+            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
+        }
+        View::share('notification', $notification);
         $item = Item::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
 		// Validate the request
 		$request->validate([
@@ -49,10 +86,17 @@ class CheckoutController extends Controller
 		$tax = $total_price * ($total_price * 0.10);
 
 
+<<<<<<< HEAD
+//        $uuid = now()->format('YmdHis') . auth()->user()->id;
+
+        $booking = $item->bookings()->create([
+//            'id' => $uuid,
+=======
         $uuid = now()->format('YmdHis') . auth()->user()->id;
 
         $booking = $item->bookings()->create([
             'id' => $uuid,
+>>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
             'user_id' => auth()->user()->id,
             'name' => $request->name,
             'start_date' => $start_date,
@@ -65,7 +109,7 @@ class CheckoutController extends Controller
 
         $request->session()->put('checkout_completed', true);
 
-        return view('success', ['booking' => $booking, 'item' => $item]);
+        return view('success', ['booking' => $booking, 'item' => $item,'notification' => $notification]);
 
 
 

@@ -61,17 +61,6 @@ Route::prefix('owner')->name('owner.')->middleware([
 	Route::resource('items', OwnerItemController::class);
 });
 
-//Route::prefix('driver')->name('driver.')->middleware([
-//    'auth:sanctum',
-//    config('jetstream.auth_session'),
-//    'verified',
-//    'driver'
-//])->group(function () {
-//    Route::get('/dashboard', [DriverDashboardController::class, 'index'])->name('dashboard');
-//});
-
-//Route::get('/driver/dashboard', [DriverDashboardController::class, 'index'])->name('driver.dashboard');
-
 //Route::name('admin.')->group(function () {
 //    Route::group(['middleware' => 'auth'], function () {
 //        Route::resource('bookings', AdminBookingController::class);
@@ -79,8 +68,29 @@ Route::prefix('owner')->name('owner.')->middleware([
 //});
 
 
-
-Route::name('admin.')->group(function () {
+//Route::prefix('admin')->name('admin.')->middleware([
+////    'auth:sanctum',
+////    config('jetstream.auth_session'),
+////    'verified',
+//    'admin'
+//])->group(function () {
+//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+//    Route::resource('bookings', AdminBookingController::class);
+//});
+//Route::name('admin.')->middleware([
+//    'auth:sanctum',
+//    config('jetstream.auth_session'),
+//    'verified',
+//    'admin'
+//])->group(function () {
+//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+//    Route::resource('bookings', AdminBookingController::class);
+//});
+Route::name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('bookings', AdminBookingController::class);});
+    Route::resource('bookings', AdminBookingController::class);
+});
+
+
+
 
