@@ -1,6 +1,5 @@
 <x-front-layout>
     <div class="container mx-auto py-4">
-<<<<<<< HEAD
         @if ($userBookings->isEmpty())
             <div class="text-center bg-dark rounded-3xl flex flex-col justify-center items-center p-[30px]" style="height: 500px">
                 <header style="margin-bottom: 15px">
@@ -21,13 +20,6 @@
             </div>
         @else
             <h1 class="text-center text-2xl font-bold mb-4">Your Bookings</h1>
-=======
-        <h1 class="text-center text-2xl font-bold mb-4">Your Bookings</h1>
-
-        @if ($userBookings->isEmpty())
-            <p class="text-gray-600">You have no bookings at the moment.</p>
-        @else
->>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
             <div class="flex justify-center items-center">
             <table class="min-w-full bg-white border rounded-lg shadow overflow-hidden">
                 <thead class="bg-dark text-white text-gray-600">
@@ -37,11 +29,8 @@
                     <th class="py-2 px-3 text-left">Vehicle</th>
                     <th class="py-2 px-3 text-left">Start Date</th>
                     <th class="py-2 px-3 text-left">End Date</th>
-<<<<<<< HEAD
                     <th class="py-2 px-3 text-left">Booking</th>
-=======
                     <th class="py-2 px-3 text-left">Status</th>
->>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
                     <th class="py-2 px-3 text-left">Payment</th>
                     <th class="py-2 px-3 text-left">Return</th>
                     <th class="py-2 px-3 text-left">Total Price</th>
