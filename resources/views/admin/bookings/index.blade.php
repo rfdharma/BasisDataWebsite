@@ -73,10 +73,35 @@
                             </tr>
                         @endforeach
 
+<<<<<<< HEAD
                         </tbody>
                     </table>
                 </div>
             </div>
+=======
+  <div class="py-12">
+    <div class="mx-auto max-w-8xl sm:px-auto lg:px-7">
+      <div class="overflow-hidden shadow sm:rounded-md">
+        <div class="bg-white px-4 py-5 sm:p-6">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th style="max-width: 1%">Invoice</th>
+                <th>User</th>
+                <th>Brand</th>
+                <th>Item</th>
+                <th>Mulai</th>
+                <th>Selesai</th>
+                <th>Status Booking</th>
+                <th>Status Pembayaran</th>
+                  <th>Status Pengembalian</th>
+                <th>Total Dibayar</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+>>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
         </div>
     </div>
 </x-app-layout>
