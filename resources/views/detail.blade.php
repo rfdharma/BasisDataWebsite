@@ -4,17 +4,17 @@
   <section class="relative bg-darkGrey py-[70px]">
     <div class="container">
       <!-- Breadcrumb -->
-      <ul class="mb-[50px] flex items-center gap-5">
-        <li class="inline-flex gap-5 text-base font-normal capitalize text-secondary after:content-['/'] last:after:content-none">
-          <a href="{{ route('front.index') }}">Home</a>
-        </li>
-        <li class="inline-flex gap-5 text-base font-normal capitalize text-secondary after:content-['/'] last:after:content-none">
-          <a href="#!">{{ $item->brand->name }}</a>
-        </li>
-        <li class="inline-flex gap-5 text-base font-semibold capitalize text-dark after:content-['/'] last:after:content-none">
-          Details
-        </li>
-      </ul>
+{{--      <ul class="mb-[50px] flex items-center gap-5">--}}
+{{--        <li class="inline-flex gap-5 text-base font-normal capitalize text-secondary after:content-['/'] last:after:content-none">--}}
+{{--          <a href="{{ route('front.index') }}">Home</a>--}}
+{{--        </li>--}}
+{{--        <li class="inline-flex gap-5 text-base font-normal capitalize text-secondary after:content-['/'] last:after:content-none">--}}
+{{--          <a href="#!">{{ $item->brand->name }}</a>--}}
+{{--        </li>--}}
+{{--        <li class="inline-flex gap-5 text-base font-semibold capitalize text-dark after:content-['/'] last:after:content-none">--}}
+{{--          Details--}}
+{{--        </li>--}}
+{{--      </ul>--}}
 
       <div class="grid grid-cols-12 gap-[30px]">
         <!-- Car Preview -->

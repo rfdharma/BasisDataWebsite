@@ -31,6 +31,7 @@ class BookingUpdateRequest extends FormRequest
 			'zip' => 'nullable|string|max:255',
 			'status' => 'required|string|max:255',
 			'payment_status' => 'required|string|max:255',
-		];
+            'return_status' => 'required|string|max:255',
+        ];
 	}
 }

@@ -82,6 +82,10 @@
 			background-color: #edf2f7;
 			/*bg-gray-200*/
 		}
+        select:disabled {
+            appearance: none;
+            background-image: none;
+        }
 
 		.dataTables_wrapper select {
 			padding-right: 1.5rem;

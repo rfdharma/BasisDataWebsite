@@ -13,7 +13,7 @@
           </header>
           <!-- Button Primary -->
           <div class="group w-[220px] rounded-full bg-primary p-1">
-            <a href="{{ route('front.index') }}" class="btn-primary">
+            <a href="{{ route('front.orders') }}" class="btn-primary">
               <p>
                 Check Order
               </p>

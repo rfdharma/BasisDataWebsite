@@ -1,54 +1,55 @@
 <x-front-layout>
   <!-- Hero -->
-  <section class="container relative pb-[100px] pt-[30px]">
-    <div class="flex flex-col items-center justify-center gap-[30px]">
-      <!-- Preview Image -->
-      <div class="relative">
-        <div class="absolute z-0 hidden lg:block">
-          <div class="text-[220px] font-extrabold leading-[101%] tracking-[-0.06em] text-darkGrey">
-            <div data-aos="fade-right" data-aos-delay="300">
-              NEW
+    <section class="container relative pb-[100px] pt-[30px]">
+        <div class="flex flex-col items-center justify-center gap-[30px]">
+            <!-- Preview Image -->
+            <div class="relative">
+                <div class="absolute z-0 hidden lg:block">
+                    <div class="text-[220px] font-extrabold leading-[101%] tracking-[-0.06em] text-darkGrey">
+                        <div data-aos="fade-right" data-aos-delay="300">
+                            NEW
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="600">
+                            {{ $items_landing[count($items_landing) - 1]->brand->name }}
+                        </div>
+                    </div>
+                </div>
+                <img src="{{ $items_landing[count($items_landing) - 1]->thumbnail }}" class="relative z-5 w-full max-w-[963px] rounded-[30px] img-fluid" alt="Car.png" data-aos="zoom-in" data-aos-delay="1150">
             </div>
-            <div data-aos="fade-left" data-aos-delay="600">
-                {{ $items_landing[0]->brand->name }}
-            </div>
-          </div>
-        </div>
-        <img src="{{ $items_landing[0]->thumbnail }}" class="relative z-10 w-full max-w-[963px] rounded-[30px] img-fluid" alt="Car.png" data-aos="zoom-in" data-aos-delay="1150">
-      </div>
 
-        <div class="flex flex-col items-center justify-around gap-7 lg:flex-row lg:gap-[60px]">
-            <!-- Car Details -->
-            <div data-aos="fade-left" data-aos-delay="600" style="font-size: 40px" class="font-bold">
-                {{ $items_landing[0]->brand->name }}
-            </div>
-            <span class="vr" data-aos="fade-left" data-aos-delay="1100"></span>
-            <div class="flex flex-col items-center gap-[2px] px-3 md:px-10" data-aos="fade-left" data-aos-delay="950">
-                <h6 class="text-center font-bold text-dark md:text-[26px] pb-2" style="font-size: 35px">
-                    {{ $items_landing[0]->name }}
-                </h6>
-                @php
-                    $features = explode(', ', $items_landing[0]->features); // Membagi fitur menjadi array
-                    $featuresText = implode(' | ', $features); // Menggabungkan array menjadi satu teks dengan "|" sebagai pemisah
-                @endphp
-                <p class="text-center text-sm font-normal text-secondary md:text-base">
-                    {{ $featuresText }}
-                </p>
-            </div>
-            <span class="vr" data-aos="fade-left" data-aos-delay="1100"></span>
+            <div class="flex flex-col items-center justify-around gap-7 lg:flex-row lg:gap-[60px]">
+                <!-- Car Details -->
+                <div data-aos="fade-left" data-aos-delay="600" style="font-size: 40px" class="font-bold">
+                    {{ $items_landing[count($items_landing) - 1]->brand->name }}
+                </div>
+                <span class="vr" data-aos="fade-left" data-aos-delay="1100"></span>
+                <div class="flex flex-col items-center gap-[2px] px-3 md:px-10" data-aos="fade-left" data-aos-delay="950">
+                    <h6 class="text-center font-bold text-dark md:text-[26px] pb-2" style="font-size: 35px">
+                        {{ $items_landing[count($items_landing) - 1]->name }}
+                    </h6>
+                    @php
+                        $features = explode(', ', $items_landing[count($items_landing) - 1]->features); // Membagi fitur menjadi array
+                        $featuresText = implode(' | ', $features); // Menggabungkan array menjadi satu teks dengan "|" sebagai pemisah
+                    @endphp
+                    <p class="text-center text-sm font-normal text-secondary md:text-base">
+                        {{ $featuresText }}
+                    </p>
+                </div>
+                <span class="vr" data-aos="fade-left" data-aos-delay="1100"></span>
 
-        <!-- Button Primary -->
-            <div class="group rounded-full bg-primary p-1" data-aos="zoom-in" data-aos-delay="1200">
-              <a href="{{ route('front.checkout', ['slug' => $items[0]->slug, 'thumbnail' => $items[0]->thumbnail]) }}" class="btn-primary">
-                <p>
-                  Rent Now
-                </p>
-                <img src="/svgs/ic-arrow-right.svg" alt="">
-              </a>
+                <!-- Button Primary -->
+                <div class="group rounded-full bg-primary p-1" data-aos="zoom-in" data-aos-delay="1200">
+                    <a href="{{ route('front.checkout', ['slug' => $items[count($items) - 1]->slug, 'thumbnail' => $items_landing[count($items_landing) - 1]->thumbnail]) }}" class="btn-primary">
+                        <p>
+                            Rent Now
+                        </p>
+                        <img src="/svgs/ic-arrow-right.svg" alt="">
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-  </section>
+    </section>
+
 
   <!-- Popular Cars -->
   <section class="bg-dark">
