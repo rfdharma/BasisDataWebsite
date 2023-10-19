@@ -2,7 +2,9 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Models\Booking;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Laravel\Jetstream\Contracts\DeletesUsers;
 
 class DeleteUser implements DeletesUsers

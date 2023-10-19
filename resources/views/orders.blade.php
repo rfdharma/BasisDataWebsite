@@ -30,7 +30,6 @@
                     <th class="py-2 px-3 text-left">Start Date</th>
                     <th class="py-2 px-3 text-left">End Date</th>
                     <th class="py-2 px-3 text-left">Booking</th>
-                    <th class="py-2 px-3 text-left">Status</th>
                     <th class="py-2 px-3 text-left">Payment</th>
                     <th class="py-2 px-3 text-left">Return</th>
                     <th class="py-2 px-3 text-left">Total Price</th>

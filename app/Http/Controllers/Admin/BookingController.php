@@ -88,7 +88,6 @@ class BookingController extends Controller
             $newStatus = $request->input('status');
             $booking->status = $newStatus;
 
-            // Jika status booking diubah menjadi "failed", maka ubah juga status pembayaran menjadi "failed"
             if ($newStatus == 'failed') {
                 $booking->payment_status = 'failed';
             } elseif ($newStatus == 'pending') {
@@ -155,7 +154,16 @@ class BookingController extends Controller
 	public function destroy(Booking $booking)
 	{
 		$booking->delete();
+        $notificationMessage = 'Invoice ' . $booking->id . ' has been deleted by admin.';
 
+        // Replace HTML line breaks with newlines
+        $notificationMessage = str_replace('<br>', "\n", $notificationMessage);
+
+        $notification = new Notification([
+            'user_id' => $booking->user_id,
+            'message' => $notificationMessage,
+        ]);
+        $booking->notifications()->save($notification);
 		return redirect()->route('admin.bookings.index');
 	}
 }
