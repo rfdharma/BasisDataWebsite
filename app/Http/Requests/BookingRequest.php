@@ -31,7 +31,7 @@ class BookingRequest extends FormRequest
 			'address' => 'nullable|string',
 			'city' => 'nullable|string|max:255',
 			'zip' => 'nullable|string|max:255',
-			'status' => 'required|string|max:255',
+//			'status' => 'required|string|max:255',
 //			'payment_method' => 'required|string|max:255',
 //			'payment_status' => 'required|string|max:255',
 //			'payment_url' => 'nullable|string|max:255',
@@ -39,7 +39,7 @@ class BookingRequest extends FormRequest
             'payment_status' => 'required|in:pending,success,failed',
             'return_status' => 'required|in:not returned,returned,expired',
 			'total_price' => 'required|integer',
-			'items_id' => 'required|integer|exists:items,id',
+			'vehicles_id' => 'required|integer|exists:items,id',
 			'user_id' => 'required|integer|exists:users,id',
 		];
 	}

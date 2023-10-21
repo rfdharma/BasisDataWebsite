@@ -32,9 +32,7 @@ return new class extends Migration
 			$table->string('status')->default('pending');
 
 //			// Payment
-//			$table->string('payment_method')->default('midtrans');
 			$table->string('payment_status')->default('pending');
-//			$table->string('payment_url')->nullable();
 
             // Return
             $table->string('return_status')->default('not returned');
@@ -43,7 +41,7 @@ return new class extends Migration
 			$table->integer('total_price')->default(0);
 
 			// Relation to Item and User
-			$table->foreignId('items_id')->constrained();
+			$table->foreignId('vehicle_id')->constrained();
 			$table->foreignId('user_id')->constrained();
 
 			$table->softDeletes();

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
-use App\Models\Item;
+use App\Models\Vehicle;
 use App\Models\Notification;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
@@ -17,11 +15,11 @@ class LandingController extends Controller
         if (auth()->check() && auth()->user()->roles === 'ADMIN') {
             return Redirect::to('dashboard'); // Redirect to the admin dashboard
         }
-        $items = Item::with(['type', 'brand'])
+        $items = Vehicle::with(['type', 'brand'])
             ->orderBy('star', 'desc') // Mengurutkan berdasarkan star terbanyak
             ->take(5)
             ->get();
-        $items_landing = Item::with(['type', 'brand'])->get();
+        $items_landing = Vehicle::with(['type', 'brand'])->get();
 
         if (auth()->check()) {
             // Pengguna diotentikasi

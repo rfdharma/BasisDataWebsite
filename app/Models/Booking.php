@@ -22,7 +22,7 @@ class Booking extends Model
 		'payment_status',
         'return_status',
 		'total_price',
-		'item_id',
+		'vehicle_id',
 		'user_id'
 	];
 
@@ -32,9 +32,9 @@ class Booking extends Model
 	];
 
 
-    public function item()
+    public function vehicle()
 	{
-		return $this->belongsTo(Item::class);
+		return $this->belongsTo(Vehicle::class);
 	}
 
 	public function user()

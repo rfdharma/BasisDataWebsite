@@ -39,8 +39,8 @@
                   <x-jet-nav-link href="{{ route('owner.types.index') }}" :active="request()->routeIs('owner.types.index')">
                       {{ __('Types') }}
                   </x-jet-nav-link>
-                  <x-jet-nav-link href="{{ route('owner.items.index') }}" :active="request()->routeIs('owner.items.index')">
-                      {{ __('Items') }}
+                  <x-jet-nav-link href="{{ route('owner.vehicles.index') }}" :active="request()->routeIs('owner.vehicles.index')">
+                      {{ __('Vehicles') }}
                   </x-jet-nav-link>
               </div>
           @elseif(auth()->user()->roles == 'ADMIN')
@@ -196,7 +196,7 @@
       <x-jet-responsive-nav-link href="{{ route('owner.types.index') }}" :active="request()->routeIs('owner.types.index')">
         {{ __('Types') }}
       </x-jet-responsive-nav-link>
-      <x-jet-responsive-nav-link href="{{ route('owner.items.index') }}" :active="request()->routeIs('owner.items.index')">
+      <x-jet-responsive-nav-link href="{{ route('owner.vehicles.index') }}" :active="request()->routeIs('owner.vehicles.index')">
         {{ __('Items') }}
       </x-jet-responsive-nav-link>
 {{--      <x-jet-responsive-nav-link href="{{ route('owner.bookings.index') }}" :active="request()->routeIs('owner.bookings.index')">--}}

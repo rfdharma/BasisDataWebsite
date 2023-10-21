@@ -12,11 +12,11 @@ class Brand extends Model
 
 	protected $fillable = [
 		'name',
-		'slug'
+//		'slug'
 	];
 
-	public function items()
+	public function vehicles()
 	{
-		return $this->hasMany(Item::class);
+		return $this->hasMany(Vehicle::class);
 	}
 }

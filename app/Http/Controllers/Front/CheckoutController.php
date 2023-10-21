@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Vehicle;
 use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class CheckoutController extends Controller
 {
 	public function index(Request $request, $slug)
 	{
-		$item = Item::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
+		$item = Vehicle::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
         if (auth()->check()) {
             // Pengguna diotentikasi
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
@@ -55,7 +55,7 @@ class CheckoutController extends Controller
             // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
         }
         View::share('notification', $notification);
-        $item = Item::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
+        $item = Vehicle::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
 		// Validate the request
 		$request->validate([
 			'name' => 'required|string|max:255',
@@ -74,7 +74,7 @@ class CheckoutController extends Controller
 		$days = $start_date->diffInDays($end_date);
 
 		// Get the item
-		$item = Item::whereSlug($slug)->firstOrFail();
+		$item = Vehicle::whereSlug($slug)->firstOrFail();
 
 		// Calculate the total price
 		$total_price = $days * $item->price;

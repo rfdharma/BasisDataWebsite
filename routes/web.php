@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Front\CatalogController;
+use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\DetailController;
+use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\OrderController;
+use App\Http\Controllers\Owner\Owner\Admin\DashboardController;
+use App\Http\Controllers\Owner\VehiclePlateController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\BrandController as OwnerBrandController;
 use App\Http\Controllers\Owner\TypeController as OwnerTypeController;
-use App\Http\Controllers\Owner\ItemController as OwnerItemController;
-use App\Http\Controllers\Admin\BookingController as AdminBookingController;
-use App\Http\Controllers\Front\CheckoutController;
-use App\Http\Controllers\Front\DetailController;
-use App\Http\Controllers\Front\LandingController;
-use App\Http\Controllers\Front\PaymentController;
+use App\Http\Controllers\Owner\VehicleController as OwnerItemController;
+use App\Http\Controllers\Owner\Owner\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Owner\Owner\Front\PaymentController;
 
 //use App\Http\Controllers\Driver\DashboardController as DriverDashboardController;
 
@@ -58,7 +59,9 @@ Route::prefix('owner')->name('owner.')->middleware([
 	Route::get('/dashboard', [OwnerDashboardController::class, 'index'])->name('dashboard');
 	Route::resource('brands', OwnerBrandController::class);
 	Route::resource('types', OwnerTypeController::class);
-	Route::resource('items', OwnerItemController::class);
+	Route::resource('vehicles', OwnerItemController::class);
+    Route::resource('vehicles', OwnerItemController::class);
+    Route::resource('vehicles.plates', VehiclePlateController::class);
 });
 
 Route::name('admin.')->middleware(['auth','role:ADMIN'])->group(function () {

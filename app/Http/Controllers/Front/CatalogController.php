@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Item;
+use App\Models\Vehicle;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -12,7 +12,7 @@ class CatalogController extends Controller
 {
     public function index()
     {
-        $items = Item::with(['type', 'brand'])->latest()->get(); // Mengambil semua item
+        $items = Vehicle::with(['type', 'brand'])->latest()->get(); // Mengambil semua item
         if (auth()->check()) {
             // Pengguna diotentikasi
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();

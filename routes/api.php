@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\MidtransCallbackController;
+use App\Http\Controllers\Owner\Owner\API\MidtransCallbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

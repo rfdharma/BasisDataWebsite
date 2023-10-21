@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Owner\Owner\Admin;
 
 use App\Models\Booking;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Owner\Owner\Controller;
 use App\Http\Requests\BookingRequest;
 use App\Http\Requests\BookingUpdateRequest;
 
