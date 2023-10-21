@@ -18,7 +18,7 @@ class IsRole
 	{
         if ($request->user()->roles == 'OWNER') {
             return $next($request);
-        } elseif ($request->user()->roles == 'ADMIN') {
+        } elseif (auth()->check() && auth()->user()->roles === 'ADMIN') {
             return redirect()->route('admin.dashboard');
         }
 		return redirect()->route('front.index');

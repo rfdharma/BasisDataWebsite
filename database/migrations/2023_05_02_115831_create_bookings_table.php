@@ -14,11 +14,7 @@ return new class extends Migration
 	public function up()
 	{
 		Schema::create('bookings', function (Blueprint $table) {
-<<<<<<< HEAD
             $table->id();
-=======
-            $table->uuid('id')->primary();
->>>>>>> f9e89d9e445af32e57d6199e469c779fedc87658
 
 			// Name
 			$table->string('name')->nullable();
