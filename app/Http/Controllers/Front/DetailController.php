@@ -10,34 +10,31 @@ use Illuminate\Support\Facades\View;
 
 class DetailController extends Controller
 {
-	public function index($slug)
-	{
-		$item = Vehicle::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
-		// dd($item);
-		$similiarItems = Vehicle::with(['type', 'brand'])
-			->where('id', '!=', $item->id)
-			->get();
+    public function index($id)
+    {
+        $item = Vehicle::with(['type', 'brand'])->findOrFail($id);
+        $similiarItems = Vehicle::with(['type', 'brand'])
+            ->where('id', '!=', $id)
+            ->get();
+
+        $notification = null; // Initialize notification variable
 
         if (auth()->check()) {
-            // Pengguna diotentikasi
+            // User is authenticated, fetch their notifications
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
-        } else {
-            // Pengguna tidak diotentikasi
-            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
         }
 
-        if ($notification) {
-            if ($notification->isEmpty()) {
-                $notification = 'Tidak ada notifikasi.';
-            }
-        } else {
-            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
+        if ($notification && $notification->isEmpty()) {
+            $notification = 'Tidak ada notifikasi.';
         }
+
         View::share('notification', $notification);
-		return view('detail', [
-			'item' => $item,
-			'similiarItems' => $similiarItems,
+
+        return view('detail', [
+            'item' => $item,
+            'similiarItems' => $similiarItems,
             'notification' => $notification
-		]);
-	}
+        ]);
+    }
 }
+

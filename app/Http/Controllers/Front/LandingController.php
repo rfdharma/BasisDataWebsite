@@ -15,6 +15,15 @@ class LandingController extends Controller
         if (auth()->check() && auth()->user()->roles === 'ADMIN') {
             return Redirect::to('dashboard'); // Redirect to the admin dashboard
         }
+
+        // Fetch the latest vehicle based on your criteria
+        $latestVehicle = Vehicle::with(['type', 'brand','photos'])
+            ->orderBy('created_at', 'desc') // You can adjust this based on your criteria
+            ->first();
+
+        $photos = $latestVehicle->photos;
+
+
         $items = Vehicle::with(['type', 'brand'])
             ->orderBy('star', 'desc') // Mengurutkan berdasarkan star terbanyak
             ->take(5)
@@ -38,12 +47,22 @@ class LandingController extends Controller
         }
 
         View::share('notification', $notification);
+
+        $popularVehicles = Vehicle::with(['type', 'brand'])
+            ->orderBy('star', 'desc') // Replace 'popularity_column' with the actual column name you want to use for popularity
+            ->take(4) // Adjust the number of popular vehicles to display
+            ->get();
+
         return view('landing', [
+            'latestVehicle' => $latestVehicle,
+            'popularVehicles' => $popularVehicles, // Pass the popular vehicles to the view
             'items' => $items,
             'items_landing' => $items_landing,
             'notification' => $notification
         ]);
+
     }
+
 
 
 }

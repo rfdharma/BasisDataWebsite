@@ -31,11 +31,11 @@ use App\Http\Controllers\Owner\Owner\Front\PaymentController;
 
 Route::name('front.')->group(function () {
 	Route::get('/', [LandingController::class, 'index'])->name('index');
-	Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
+    Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
     Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog');
 	Route::group(['middleware' => 'auth'], function () {
-		Route::get('/checkout/{slug}', [CheckoutController::class, 'index'])->name('checkout');
-		Route::post('/checkout/{slug}', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
+        Route::post('/checkout/{id}', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::get('/checkout/send', function () {
             if (session()->has('checkout_completed')) {
                 return view('success');
@@ -43,10 +43,6 @@ Route::name('front.')->group(function () {
         })->name('book.success');
 
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
-
-//		Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
-//		Route::get('/payment/{bookingId}', [PaymentController::class, 'index'])->name('payment');
-//		Route::post('/payment/{bookingId}', [PaymentController::class, 'update'])->name('payment.update');
 	});
 });
 

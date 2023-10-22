@@ -8,79 +8,78 @@ use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-	public function index(Request $request, $slug)
-	{
-		$item = Vehicle::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
+    public function index(Request $request, $id)
+    {
+        $item = Vehicle::with(['type', 'brand'])->findOrFail($id);
         if (auth()->check()) {
-            // Pengguna diotentikasi
+            // User is authenticated
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
         } else {
-            // Pengguna tidak diotentikasi
-            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
+            // User is not authenticated
+            $notification = null; // Adjust for handling unauthenticated users
         }
 
         if ($notification) {
             if ($notification->isEmpty()) {
-                $notification = 'Tidak ada notifikasi.';
+                $notification = 'No notifications available.';
             }
         } else {
-            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
+            // Handle the case when the user is not authenticated or other errors occur
         }
         View::share('notification', $notification);
-		return view('checkout', [
-			'item' => $item,
+        return view('checkout', [
+            'item' => $item,
             'notification' => $notification
-		]);
-	}
+        ]);
+    }
 
-	public function store(Request $request, $slug)
-	{
+    public function store(Request $request, $id)
+    {
         if (auth()->check()) {
-            // Pengguna diotentikasi
+            // User is authenticated
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
         } else {
-            // Pengguna tidak diotentikasi
-            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
+            // User is not authenticated
+            $notification = null; // Adjust for handling unauthenticated users
         }
 
         if ($notification) {
             if ($notification->isEmpty()) {
-                $notification = 'Tidak ada notifikasi.';
+                $notification = 'No notifications available.';
             }
         } else {
-            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
+            // Handle the case when the user is not authenticated or other errors occur
         }
         View::share('notification', $notification);
-        $item = Vehicle::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
-		// Validate the request
-		$request->validate([
-			'name' => 'required|string|max:255',
-			'start_date' => 'required',
-			'end_date' => 'required',
-			'address' => 'required|string|max:255',
-			'city' => 'required|string|max:255',
-			'zip' => 'required|string|max:5',
-		]);
 
-		// Format start_date and end_date from dd mm yy to timestamp
-		$start_date = Carbon::createFromFormat('d m Y', $request->start_date);
-		$end_date = Carbon::createFromFormat('d m Y', $request->end_date);
+        // Validate the request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zip' => 'required|string|max:5',
+        ]);
 
-		// Count the number of days between start_date and end_date
-		$days = $start_date->diffInDays($end_date);
+        // Format start_date and end_date from dd mm yy to timestamp
+        $start_date = Carbon::createFromFormat('d m Y', $request->start_date);
+        $end_date = Carbon::createFromFormat('d m Y', $request->end_date);
 
-		// Get the item
-		$item = Vehicle::whereSlug($slug)->firstOrFail();
+        // Count the number of days between start_date and end_date
+        $days = $start_date->diffInDays($end_date);
 
-		// Calculate the total price
-		$total_price = $days * $item->price;
+        // Get the item
+        $item = Vehicle::findOrFail($id);
 
-		// Add 10% tax
-		$tax = $total_price * ($total_price * 0.10);
+        // Calculate the total price
+        $total_price = $days * $item->price;
+
+        // Add 10% tax
+        $tax = $total_price * ($total_price * 0.10);
 
         $booking = $item->bookings()->create([
             'user_id' => auth()->user()->id,
@@ -95,9 +94,6 @@ class CheckoutController extends Controller
 
         $request->session()->put('checkout_completed', true);
 
-        return view('success', ['booking' => $booking, 'item' => $item,'notification' => $notification]);
-
-
-
+        return view('success', ['booking' => $booking, 'item' => $item, 'notification' => $notification]);
     }
 }

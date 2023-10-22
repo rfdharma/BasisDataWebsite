@@ -1,5 +1,5 @@
 <x-front-layout>
-  <!-- Hero -->
+    <!-- Hero -->
     <section class="container relative pb-[100px] pt-[30px]">
         <div class="flex flex-col items-center justify-center gap-[30px]">
             <!-- Preview Image -->
@@ -10,25 +10,33 @@
                             NEW
                         </div>
                         <div data-aos="fade-left" data-aos-delay="600">
-                            {{ $items_landing[count($items_landing) - 1]->brand->name }}
+                            {{ $latestVehicle->brand->name }}
                         </div>
                     </div>
                 </div>
-                <img src="{{ $items_landing[count($items_landing) - 1]->thumbnail }}" class="relative z-5 w-full max-w-[963px] rounded-[30px] img-fluid" alt="Car.png" data-aos="zoom-in" data-aos-delay="1150">
+                @if ($latestVehicle && $latestVehicle->photos->count() > 0)
+                    @php
+                        $latestPhoto = $latestVehicle->photos->last(); // Get the last photo
+                    @endphp
+                    <img src="{{ asset('storage/' . $latestPhoto->photos) }}" class="relative z-5 w-full max-w-[963px] rounded-[30px] img-fluid" alt="Car.png" data-aos="zoom-in" data-aos-delay="1150">
+                @else
+                    <p>No photos available for the latest vehicle.</p>
+                @endif
+
             </div>
 
             <div class="flex flex-col items-center justify-around gap-7 lg:flex-row lg:gap-[60px]">
                 <!-- Car Details -->
                 <div data-aos="fade-left" data-aos-delay="600" style="font-size: 40px" class="font-bold">
-                    {{ $items_landing[count($items_landing) - 1]->brand->name }}
+                    {{ $latestVehicle->brand->name }}
                 </div>
                 <span class="vr" data-aos="fade-left" data-aos-delay="1100"></span>
                 <div class="flex flex-col items-center gap-[2px] px-3 md:px-10" data-aos="fade-left" data-aos-delay="950">
                     <h6 class="text-center font-bold text-dark md:text-[26px] pb-2" style="font-size: 35px">
-                        {{ $items_landing[count($items_landing) - 1]->name }}
+                        {{ $latestVehicle->name }}
                     </h6>
                     @php
-                        $features = explode(', ', $items_landing[count($items_landing) - 1]->features); // Membagi fitur menjadi array
+                        $features = explode(', ', $latestVehicle->features); // Membagi fitur menjadi array
                         $featuresText = implode(' | ', $features); // Menggabungkan array menjadi satu teks dengan "|" sebagai pemisah
                     @endphp
                     <p class="text-center text-sm font-normal text-secondary md:text-base">
@@ -39,7 +47,7 @@
 
                 <!-- Button Primary -->
                 <div class="group rounded-full bg-primary p-1" data-aos="zoom-in" data-aos-delay="1200">
-                    <a href="{{ route('front.checkout', ['slug' => $items[count($items) - 1]->slug, 'thumbnail' => $items_landing[count($items_landing) - 1]->thumbnail]) }}" class="btn-primary">
+                    <a href="{{ route('front.checkout', ['id' => $latestVehicle->id]) }}" class="btn-primary">
                         <p>
                             Rent Now
                         </p>
@@ -50,50 +58,57 @@
         </div>
     </section>
 
+    <!-- Popular Cars -->
+    <section class="bg-dark">
+        <div class="text-center container relative" style="padding-top: 10%;padding-bottom: 10%">
+            <header class="mb-[50px]" style="margin-top: -30px">
+                <h1 class="mb-2 font-bold text-white" style="font-size: 33px">
+                    Favored Rental
+                </h1>
+                <h1 class="text-base text-secondary text-gray-200" style="font-size: 20px">Start your big day</h1>
+            </header>
 
-  <!-- Popular Cars -->
-  <section class="bg-dark">
-    <div class="text-center container relative" style="padding-top: 10%;padding-bottom: 10%">
-      <header class="mb-[50px]" style="margin-top: -30px">
-        <h1 class="mb-2 font-bold text-white" style="font-size: 33px">
-            Favored Rental
-        </h1>
-        <h1 class="text-base text-secondary text-gray-200" style="font-size: 20px">Start your big day</h1>
-      </header>
+            <!-- Cars -->
+            <div class="grid gap-[29px] md:grid-cols-2 lg:grid-cols-4">
+                @foreach ($popularVehicles as $vehicle)
+                    <!-- Card -->
+                    <div class="card-popular">
+                        <div>
+                            <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                {{ $vehicle->name }}
+                            </h5>
+                            <p class="text-sm font-normal text-secondary">
+                                {{ $vehicle->type ? $vehicle->type->name : '-' }}
+                            </p>
+                            <a href="{{ route('front.detail', $vehicle->id) }}" class="absolute inset-0"></a>
+                        </div>
+                        @if ($vehicle->photos->count() > 0)
+                            @php
+                                $photo = $vehicle->photos->last(); // Get the last photo associated with the vehicle
+                            @endphp
+                            <img src="{{ asset('storage/' . $photo->photos) }}" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="{{ $vehicle->name }} Photo">
+                        @else
+                            <p>No photos available for this vehicle.</p>
+                        @endif
+                        <div class="flex items-center justify-between gap-1">
+                            <!-- Price -->
+                            <p class="text-sm font-normal text-secondary">
+                                <span class="text-base font-bold text-primary">${{ number_format($vehicle->price) }}</span>/day
+                            </p>
+                            <!-- Rating -->
+                            <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
+                                ({{ $vehicle->star }}/5)
+                                <img src="/svgs/ic-star.svg" alt="">
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
 
-      <!-- Cars -->
-      <div class="grid gap-[29px] md:grid-cols-2 lg:grid-cols-4">
-        @foreach ($items as $item)
-          <!-- Card -->
-          <div class="card-popular">
-            <div>
-              <h5 class="mb-[2px] text-lg font-bold text-dark">
-                {{ $item->name }}
-              </h5>
-              <p class="text-sm font-normal text-secondary">
-                {{ $item->type ? $item->type->name : '-' }}
-              </p>
-              <a href="{{ route('front.detail', $item->slug) }}" class="absolute inset-0"></a>
             </div>
-            <img src="{{ $item->thumbnail }}" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="">
-            <div class="flex items-center justify-between gap-1">
-              <!-- Price -->
-              <p class="text-sm font-normal text-secondary">
-                <span class="text-base font-bold text-primary">${{ number_format($item->price) }}</span>/day
-              </p>
-              <!-- Rating -->
-              <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
-                ({{ $item->star }}/5)
-                <img src="/svgs/ic-star.svg" alt="">
-              </p>
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
+        </div>
+    </section>
 
-  <!-- Extra Benefits -->
+    <!-- Extra Benefits -->
     <div class="card">
         <section class="container relative" style="padding-top: 5%">
             <div class="flex flex-col flex-wrap items-center justify-center gap-8 md:flex-row lg:gap-[120px]">
@@ -155,7 +170,7 @@
                     <div class="mt-[50px]">
                         <!-- Button Primary -->
                         <div class="group rounded-full bg-primary p-1">
-                            <a href="{{route('front.catalog')}}" class="btn-primary">
+                            <a href="{{ route('front.catalog') }}" class="btn-primary">
                                 <p>
                                     Discover Vehicle
                                 </p>
@@ -168,114 +183,36 @@
         </section>
     </div>
 
-
-
-
     <!-- FAQ -->
-  <section class="container relative py-[100px]" style="padding-bottom: 10%">
-    <header class="mb-[50px] text-center">
-      <h2 class="mb-1 text-[26px] font-bold text-dark">
-        Frequently Asked Questions
-      </h2>
-      <p class="text-base text-secondary">Learn more about Vrom and get a success</p>
-    </header>
+{{--    <section class="container relative py-[100px]" style="padding-bottom: 10%">--}}
+{{--        <header class="mb-[50px] text-center">--}}
+{{--            <h2 class="mb-1 text-[26px] font-bold text-dark">--}}
+{{--                Frequently Asked Questions--}}
+{{--            </h2>--}}
+{{--            <p class="text-base text-secondary">Learn more about Vrom and get a success</p>--}}
+{{--        </header>--}}
 
-    <!-- Questions -->
-    <div class="mx-auto grid w-full max-w-[910px] gap-x-[50px] gap-y-6 md:grid-cols-2">
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq1">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq1-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq2">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq2-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq3">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq3-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq4">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq4-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq5">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq5-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-      <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq6">
-        <div class="flex items-center justify-between gap-1">
-          <p class="text-base font-semibold text-dark">
-            What if I crash the car?
-          </p>
-          <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">
-        </div>
-        <div class="hidden max-w-[335px] pt-4" id="faq6-content">
-          <p class="text-base leading-[26px] text-dark">
-            Ipsum top talent busy making race that
-            agreed both party. You can si amet lorem
-            dolor get the rewards after winninng.
-          </p>
-        </div>
-      </a>
-    </div>
-  </section>
+{{--        <!-- Questions -->--}}
+{{--        <div class="mx-auto grid w-full max-w-[910px] gap-x-[50px] gap-y-6 md:grid-cols-2">--}}
+{{--            @foreach ($faqItems as $index => $faq)--}}
+{{--                <a href="#!" class="accordion h-min max-w-[430px] rounded-[24px] border border-grey px-6 py-4" id="faq{{ $index + 1 }}">--}}
+{{--                    <div class="flex items-center justify-between gap-1">--}}
+{{--                        <p class="text-base font-semibold text-dark">--}}
+{{--                            {{ $faq['question'] }}--}}
+{{--                        </p>--}}
+{{--                        <img src="/svgs/ic-chevron-down-rounded.svg" class="transition-all" alt="">--}}
+{{--                    </div>--}}
+{{--                    <div class="hidden max-w-[335px] pt-4" id="faq{{ $index + 1 }}-content">--}}
+{{--                        <p class="text-base leading-[26px] text-dark">--}}
+{{--                            {{ $faq['answer'] }}--}}
+{{--                        </p>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
-  <!-- Instant Booking -->
+    <!-- Instant Booking -->
     <div class="block-section">
         <section class="text-center relative bg-[#060523]" style="padding-bottom: 8%;padding-top: 5%">
             <div class="container py-20">
@@ -288,7 +225,7 @@
                     </header>
                     <!-- Button Primary -->
                     <div class="group w-max rounded-full bg-primary p-1 mt-4">
-                        <a href="{{route('front.catalog')}}" class="btn-primary">
+                        <a href="{{ route('front.catalog') }}" class="btn-primary">
                             <p>
                                 Book Now
                             </p>
@@ -299,7 +236,6 @@
             </div>
         </section>
     </div>
-
 
     <footer class="container md:pb-20">
         <div class="py-10 md:pt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
