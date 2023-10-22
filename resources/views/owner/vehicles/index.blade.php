@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12" style="margin-left: 70px;margin-right: 70px">
+    <div class="py-12">
         <div class="mx-auto max-w-auto sm:px-6 lg:px-8">
             <div class="mb-4">
                 <a href="{{ route('owner.vehicles.create') }}"
