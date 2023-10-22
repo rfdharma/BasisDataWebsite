@@ -46,5 +46,15 @@ class Booking extends Model
         return $this->hasMany(Notification::class);
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
 
 }

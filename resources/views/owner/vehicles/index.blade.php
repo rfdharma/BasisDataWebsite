@@ -51,7 +51,7 @@
                                 <td class="px-4 py-2">{{ $vehicle->price }}</td>
                                 <td class="px-4 py-2">{{ $vehicle->features }}</td>
                                 <td class="px-4 py-2">{{ $vehicle->year }}</td>
-                                <td class="px-4 py-2">{{ $inventory->quantity }}</td>
+                                <td class="px-4 py-2">{{ $vehicle->quantity }}</td>
                                 <td class="px-4 py-2">
                                     @if ($vehicle->photos)
                                         @php

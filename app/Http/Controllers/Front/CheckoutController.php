@@ -15,21 +15,22 @@ class CheckoutController extends Controller
     {
         $item = Vehicle::with(['type', 'brand'])->findOrFail($id);
         if (auth()->check()) {
-            // User is authenticated
+            // Pengguna diotentikasi
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
         } else {
-            // User is not authenticated
-            $notification = null; // Adjust for handling unauthenticated users
+            // Pengguna tidak diotentikasi
+            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
         }
 
         if ($notification) {
             if ($notification->isEmpty()) {
-                $notification = 'No notifications available.';
+                $notification = 'Tidak ada notifikasi.';
             }
         } else {
-            // Handle the case when the user is not authenticated or other errors occur
+            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
         }
         View::share('notification', $notification);
+
         return view('checkout', [
             'item' => $item,
             'notification' => $notification
@@ -39,19 +40,19 @@ class CheckoutController extends Controller
     public function store(Request $request, $id)
     {
         if (auth()->check()) {
-            // User is authenticated
+            // Pengguna diotentikasi
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
         } else {
-            // User is not authenticated
-            $notification = null; // Adjust for handling unauthenticated users
+            // Pengguna tidak diotentikasi
+            $notification = null; // Atau sesuaikan dengan penanganan yang sesuai untuk pengguna yang tidak diotentikasi
         }
 
         if ($notification) {
             if ($notification->isEmpty()) {
-                $notification = 'No notifications available.';
+                $notification = 'Tidak ada notifikasi.';
             }
         } else {
-            // Handle the case when the user is not authenticated or other errors occur
+            // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
         }
         View::share('notification', $notification);
 

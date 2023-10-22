@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Owner\Owner\Admin;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Owner\Owner\Controller;
 use App\Http\Requests\BookingRequest;
 use App\Http\Requests\BookingUpdateRequest;
 
@@ -20,7 +20,7 @@ class BookingController extends Controller
 	 */
     public function index()
     {
-        $bookings = Booking::with(['item.brand', 'user'])->get();
+        $bookings = Booking::with(['brand', 'user'])->get();
 
         return view('admin.bookings.index', compact('bookings'));
     }

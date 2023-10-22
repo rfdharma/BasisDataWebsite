@@ -15,14 +15,14 @@
                         <tr>
                             <th class="py-2">Invoice</th>
                             <th class="py-2">User</th>
-                            <th class="py-2">Brand</th>
-                            <th class="py-2">Item</th>
+                            <th class="py-2">Vehicle</th>
                             <th class="py-2">Mulai</th>
                             <th class="py-2">Selesai</th>
                             <th class="py-2">Status Booking</th>
                             <th class="py-2">Status Pembayaran</th>
                             <th class="py-2">Status Pengembalian</th>
                             <th class="py-2">Total Dibayar</th>
+                            <th class="py-2">Available</th>
                             <th class="py-2">Aksi</th>
                         </tr>
                         </thead>
@@ -31,8 +31,11 @@
                             <tr>
                                 <td class="text-center">{{ $booking->id }}</td>
                                 <td class="text-center">{{ $booking->user->name }}</td>
-                                <td class="text-center">{{ $booking->item->brand->name }}</td>
-                                <td class="text-center">{{ $booking->item->name }}</td>
+                                <td class="text-center">
+                                    {{ $booking->vehicle->brand->name }}
+                                    {{ $booking->vehicle->type->name }}
+                                    {{ $booking->vehicle->name }}
+                                </td>
                                 <td class="text-center">{{ $booking->start_date }}</td>
                                 <td class="text-center">{{ $booking->end_date }}</td>
                                 <td class="py-2 px-1">
@@ -61,6 +64,14 @@
                                     </select>
                                 </td>
                                 <td class="text-center">{{ $booking->total_price }}</td>
+                                <td class="text-center">
+                                    @if ($booking->vehicle->inventory->available == 1)
+                                        True
+                                    @else
+                                        False
+                                    @endif
+                                </td>
+
                                 <td class="py-2 px-2">
                                     <button type="submit" class="mb-1 w-full px-2 py-1 text-xs text-white transition duration-500 rounded-md select-none ease focus:outline-none focus:shadow-outline" style="background: #008652">Save</button>
                                     </form>

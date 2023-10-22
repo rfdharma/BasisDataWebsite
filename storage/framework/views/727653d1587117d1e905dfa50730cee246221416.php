@@ -17,7 +17,7 @@
 
       <div class="flex items-center gap-5 lg:justify-between">
         <!-- Form Card -->
-        <form action="<?php echo e(route('front.checkout.store', $item->slug)); ?>" method="POST" class="w-full max-w-[490px] rounded-3xl bg-white p-[30px] pb-10"
+        <form action="<?php echo e(route('front.checkout.store', $item->id)); ?>" method="POST" class="w-full max-w-[490px] rounded-3xl bg-white p-[30px] pb-10"
           x-data="app" x-cloak id="checkoutForm">
           <?php echo csrf_field(); ?>
           <?php echo method_field('POST'); ?>
@@ -188,7 +188,7 @@
           </div>
         </form>
 
-        <img src="<?php echo e($item->thumbnail); ?>" class="img-fluid rounded-[30px] mr-[100px] hidden max-w-[50%] lg:block" alt="Car.png">
+          <img src="<?php echo e(asset('storage/' . $item->photos[0]['photos'])); ?>" class="img-fluid rounded-[30px] mr-[100px] hidden max-w-[50%] lg:block" alt="Car.png">
       </div>
     </div>
   </section>

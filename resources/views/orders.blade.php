@@ -41,10 +41,11 @@
                         <td class="py-2 px-3">{{ $booking->id }}</td>
                         <td class="py-2 px-3">{{ $booking->name }}</td>
                         <td class="py-2 px-3">
-                            {{ $booking->item->brand->name }}
-                            {{ $booking->item->type->name }}
-                            {{ $booking->item->name }}
+                            {{ $booking->vehicle->brand->name }}
+                            {{ $booking->vehicle->type->name }}
+                            {{ $booking->vehicle->name }}
                         </td>
+
                         <td class="py-2 px-3">{{ $booking->start_date }}</td>
                         <td class="py-2 px-3">{{ $booking->end_date }}</td>
                         <td class="py-2 px-3">{{ $booking->status }}</td>

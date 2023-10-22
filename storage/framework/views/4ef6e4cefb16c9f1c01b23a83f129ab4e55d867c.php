@@ -72,7 +72,7 @@
 
     <!-- Popular Cars -->
     <section class="bg-dark">
-        <div class="text-center container relative" style="padding-top: 10%;padding-bottom: 10%">
+        <div class="text-center container relative" style="padding-top: 10%; padding-bottom: 10%">
             <header class="mb-[50px]" style="margin-top: -30px">
                 <h1 class="mb-2 font-bold text-white" style="font-size: 33px">
                     Favored Rental
@@ -83,102 +83,115 @@
             <!-- Cars -->
             <div class="grid gap-[29px] md:grid-cols-2 lg:grid-cols-4">
                 <?php $__currentLoopData = $popularVehicles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <!-- Card -->
-                    <div class="card-popular">
-                        <div>
-                            <h5 class="mb-[2px] text-lg font-bold text-dark">
-                                <?php echo e($vehicle->name); ?>
+                    <?php if($vehicle->inventory->available !== 0): ?>
+                        <!-- Card -->
+                        <div class="relative">
+                            <div class="card-popular">
+                                <div>
+                                    <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        <?php echo e($vehicle->name); ?>
 
-                            </h5>
-                            <p class="text-sm font-normal text-secondary">
-                                <?php echo e($vehicle->type ? $vehicle->type->name : '-'); ?>
+                                    </h5>
+                                    <p class="text-sm font-normal text-secondary">
+                                        <?php echo e($vehicle->type ? $vehicle->type->name : '-'); ?>
 
-                            </p>
-                            <a href="<?php echo e(route('front.detail', $vehicle->id)); ?>" class="absolute inset-0"></a>
+                                    </p>
+                                    <a href="<?php echo e(route('front.detail', $vehicle->id)); ?>" class="absolute inset-0"></a>
+                                </div>
+                                <?php if($vehicle->photos->count() > 0): ?>
+                                    <?php
+                                        $photo = $vehicle->photos->last(); // Get the last photo associated with the vehicle
+                                    ?>
+                                    <img src="<?php echo e(asset('storage/' . $photo->photos)); ?>" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="<?php echo e($vehicle->name); ?> Photo">
+                                <?php else: ?>
+                                    <p>No photos available for this vehicle.</p>
+                                <?php endif; ?>
+                                <div class="flex items-center justify-between gap-1">
+                                    <!-- Price -->
+                                    <p class="text-sm font-normal text-secondary">
+                                        <span class="text-base font-bold text-primary">$<?php echo e(number_format($vehicle->price)); ?></span>/day
+                                    </p>
+                                    <!-- Rating -->
+                                    <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
+                                        (<?php echo e($vehicle->star); ?>/5)
+                                        <img src="/svgs/ic-star.svg" alt="">
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <?php if($vehicle->photos->count() > 0): ?>
-                            <?php
-                                $photo = $vehicle->photos->last(); // Get the last photo associated with the vehicle
-                            ?>
-                            <img src="<?php echo e(asset('storage/' . $photo->photos)); ?>" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="<?php echo e($vehicle->name); ?> Photo">
-                        <?php else: ?>
-                            <p>No photos available for this vehicle.</p>
-                        <?php endif; ?>
-                        <div class="flex items-center justify-between gap-1">
-                            <!-- Price -->
-                            <p class="text-sm font-normal text-secondary">
-                                <span class="text-base font-bold text-primary">$<?php echo e(number_format($vehicle->price)); ?></span>/day
-                            </p>
-                            <!-- Rating -->
-                            <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
-                                (<?php echo e($vehicle->star); ?>/5)
-                                <img src="/svgs/ic-star.svg" alt="">
-                            </p>
-                        </div>
-                    </div>
+                    <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
             </div>
         </div>
     </section>
 
+
     <!-- Extra Benefits -->
-    <div class="card">
-        <section class="container relative" style="padding-top: 5%">
-            <div class="flex flex-col flex-wrap items-center justify-center gap-8 md:flex-row lg:gap-[120px]">
+    <div class="card" style="margin-bottom: 10%">
+        <section class="container relative" style="margin-top: 10%">
+            <div class="flex items-center justify-center flex-col gap-8 md:flex-row lg:gap-[120px] text-center">
                 <div class="w-full max-w-[268px]">
-                    <div class="flex flex-col gap-[30px]">
+                    <div class="flex align-middle text-center items-center flex-col gap-[30px]">
                         <header>
                             <h2 class="mb-1 text-[26px] font-bold text-dark">
                                 Why Us?
                             </h2>
                             <p class="text-base text-secondary">You drive safety and famous</p>
                         </header>
-                        <!-- Benefits Item -->
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-[26px] bg-dark p-[19px]">
-                                <img src="/svgs/ic-car.svg" alt="">
+                        <div class="flex w-max gap-8 pt-5 pb-5">
+                            <!-- Benefits Item 1 -->
+                            <div class="flex items-center gap-4">
+                                <div class="rounded-[26px] bg-dark p-[19px]">
+                                    <img src="/svgs/ic-car.svg" alt="">
+                                </div>
+                                <div>
+                                    <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        Delivery
+                                    </h5>
+                                    <p class="text-sm font-normal text-secondary">Just sit tight and wait</p>
+                                </div>
                             </div>
-                            <div>
-                                <h5 class="mb-[2px] text-lg font-bold text-dark">
-                                    Delivery
-                                </h5>
-                                <p class="text-sm font-normal text-secondary">Just sit tight and wait</p>
+
+                            <!-- Benefits Item 2 -->
+                            <div class="flex items-center gap-4">
+                                <div class="rounded-[26px] bg-dark p-[19px]">
+                                    <img src="/svgs/ic-card.svg" alt="">
+                                </div>
+                                <div>
+                                    <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        Pricing
+                                    </h5>
+                                    <p class="text-sm font-normal text-secondary">12x Pay Installment</p>
+                                </div>
+                            </div>
+
+                            <!-- Benefits Item 3 -->
+                            <div class="flex items-center gap-4">
+                                <div class="rounded-[26px] bg-dark p-[19px]">
+                                    <img src="/svgs/ic-securityuser.svg" alt="">
+                                </div>
+                                <div>
+                                    <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        Secure
+                                    </h5>
+                                    <p class="text-sm font-normal text-secondary">Use your plate number</p>
+                                </div>
+                            </div>
+
+                            <!-- Benefits Item 4 -->
+                            <div class="flex items-center gap-4">
+                                <div class="rounded-[26px] bg-dark p-[19px]">
+                                    <img src="/svgs/ic-convert3dcube.svg" alt="">
+                                </div>
+                                <div>
+                                    <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        Fast Trade
+                                    </h5>
+                                    <p class="text-sm font-normal text-secondary">Change car faster</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-[26px] bg-dark p-[19px]">
-                                <img src="/svgs/ic-card.svg" alt="">
-                            </div>
-                            <div>
-                                <h5 class="mb-[2px] text-lg font-bold text-dark">
-                                    Pricing
-                                </h5>
-                                <p class="text-sm font-normal text-secondary">12x Pay Installment</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-[26px] bg-dark p-[19px]">
-                                <img src="/svgs/ic-securityuser.svg" alt="">
-                            </div>
-                            <div>
-                                <h5 class="mb-[2px] text-lg font-bold text-dark">
-                                    Secure
-                                </h5>
-                                <p class="text-sm font-normal text-secondary">Use your plate number</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="rounded-[26px] bg-dark p-[19px]">
-                                <img src="/svgs/ic-convert3dcube.svg" alt="">
-                            </div>
-                            <div>
-                                <h5 class="mb-[2px] text-lg font-bold text-dark">
-                                    Fast Trade
-                                </h5>
-                                <p class="text-sm font-normal text-secondary">Change car faster</p>
-                            </div>
-                        </div>
+
                     </div>
                     <!-- CTA Button -->
                     <div class="mt-[50px]">

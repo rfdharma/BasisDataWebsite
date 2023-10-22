@@ -16,7 +16,7 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        $vehicles = Vehicle::with('photos')->get(); // Mengambil semua kendaraan dengan foto-foto terkait
+        $vehicles = Vehicle::with('photos','inventory')->get(); // Mengambil semua kendaraan dengan foto-foto terkait
         return view('owner.vehicles.index', compact('vehicles'));
     }
 

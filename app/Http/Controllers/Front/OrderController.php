@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $userBookings = Booking::with('item.brand', 'item.type')
+        $userBookings = Booking::with('vehicle')
             ->where('user_id', auth()->user()->id)
             ->latest()->get();
         if (auth()->check()) {

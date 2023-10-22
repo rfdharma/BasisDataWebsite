@@ -21,7 +21,7 @@
             </a>
           </div>
         </div>
-        <img src="{{ $item->thumbnail }}" class="-mr-[100px] hidden max-w-[50%] lg:block" alt="">
+        <img src="{{ asset('storage/' . $item->photos[0]['photos']) }}" class="-mr-[100px] hidden max-w-[50%] lg:block" alt="">
       </div>
     </div>
   </section>
