@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Photo extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'photo_id'; // Nama kolom primary key
+//    protected $primaryKey = 'photo_id'; // Nama kolom primary key
 
     protected $fillable = [
         'photos', // Atribut untuk tautan (URL) gambar

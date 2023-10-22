@@ -10,6 +10,7 @@ use App\Models\Photo; // Import model Photo
 use App\Models\Type;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VehicleController extends Controller
 {
@@ -30,6 +31,18 @@ class VehicleController extends Controller
     {
         $validatedData = $request->validated();
 
+        // Cek apakah kendaraan dengan data yang sama sudah ada
+        $existingVehicle = Vehicle::where('name', $validatedData['name'])
+            ->where('type_id', $validatedData['type_id'])
+            ->where('brand_id', $validatedData['brand_id'])
+            ->first();
+
+        if ($existingVehicle) {
+            return redirect()->back()
+                ->with('error', 'Kendaraan dengan data yang sama sudah ada.');
+        }
+
+        // Jika kendaraan belum ada, simpan kendaraan
         $vehicle = new Vehicle($validatedData);
         $vehicle->save();
 
@@ -59,7 +72,11 @@ class VehicleController extends Controller
     {
         $brands = Brand::all();
         $types = Type::all();
-        return view('owner.vehicles.edit', compact('vehicle', 'brands', 'types'));
+
+        // Ambil semua foto kendaraan terkait
+        $photos = $vehicle->photos;
+
+        return view('owner.vehicles.edit', compact('vehicle', 'brands', 'types', 'photos'));
     }
 
     public function update(VehicleRequest $request, Vehicle $vehicle)
@@ -99,6 +116,42 @@ class VehicleController extends Controller
         return redirect()->route('owner.vehicles.index')
             ->with('success', 'Vehicle deleted successfully.');
     }
+    public function deletePhoto(Vehicle $vehicle, $photo_id)
+    {
+        // Cari foto dengan ID yang sesuai dengan $photoId yang dimaksud
+        $photo = Photo::find($photo_id);
+
+        // Hapus foto
+        if ($photo) {
+            // Hapus file dari penyimpanan
+            Storage::disk('public')->delete($photo->photos);
+
+            // Hapus entri foto dari basis data
+            $photo->delete();
+        }
+
+        return redirect()->back()->with('success', 'Foto berhasil dihapus.');
+    }
+
+
+    public function addPhotos(Request $request, Vehicle $vehicle)
+    {
+        $request->validate([
+            'photos' => 'required|array|max:5', // Max 5 photos allowed
+            'photos.*' => 'image|max:2048', // Each photo should be max 2MB and an image
+        ]);
+
+        foreach ($request->file('photos') as $photo) {
+            $path = $photo->store('assets/item', 'public');
+
+            // Create a separate Photo entry and associate it with the current Vehicle
+            $photoModel = new Photo(['photos' => $path]);
+            $vehicle->photos()->save($photoModel);
+        }
+
+        return redirect()->back()->with('success', 'Photos added successfully.');
+    }
+
 
 
 }

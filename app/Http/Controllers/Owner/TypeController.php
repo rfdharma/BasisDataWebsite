@@ -26,11 +26,20 @@ class TypeController extends Controller
             // Tambahkan aturan validasi sesuai kebutuhan
         ]);
 
+        // Cek apakah tipe dengan nama yang sama sudah ada
+        $existingType = Type::where('name', $request->input('name'))->first();
+
+        if ($existingType) {
+            return redirect()->back()
+                ->with('error', 'Tipe dengan nama yang sama sudah ada.');
+        }
+
         Type::create($request->all());
 
         return redirect()->route('owner.types.index')
-            ->with('success', 'Type created successfully.');
+            ->with('success', 'Tipe berhasil dibuat.');
     }
+
 
     public function edit(Type $type)
     {

@@ -26,6 +26,14 @@ class BrandController extends Controller
             // tambahkan aturan validasi sesuai kebutuhan
         ]);
 
+        // Periksa apakah sudah ada merek dengan nama yang sama
+        $existingBrand = Brand::where('name', $request->name)->first();
+
+        if ($existingBrand) {
+            return redirect()->route('owner.brands.create')
+                ->with('error', 'Merek dengan nama yang sama sudah ada.');
+        }
+
         Brand::create($request->all());
 
         return redirect()->route('owner.brands.index')

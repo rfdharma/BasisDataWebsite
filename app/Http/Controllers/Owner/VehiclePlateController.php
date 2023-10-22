@@ -53,13 +53,22 @@ class VehiclePlateController extends Controller
             ->with('success', 'Car plate added successfully.');
     }
 
+    public function listView($vehicleId)
+    {
+        // Mengambil data yang diperlukan
+        $vehicle = Vehicle::find($vehicleId);
+        $inventory = $vehicle->inventory;
+
+        return view('owner.vehicles.editplate', compact('vehicle', 'inventory'));
+    }
+
     public function edit($vehicleId, $plate)
     {
         $carPlate = CarPlate::where('plate', $plate)
             ->where('vehicles_id', $vehicleId)
             ->first();
 
-        return view('owner.vehicles.addplate', compact('carPlate'));
+        return view('owner.vehicles.editplate', compact('carPlate'));
     }
 
     public function update(Request $request, $vehicleId, $plate)

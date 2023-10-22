@@ -13,7 +13,7 @@
             <a href="<?php echo e(route('owner.types.index')); ?>" class="text-indigo-600 hover:text-indigo-900">
                 ← Kembali
             </a>
-            <?php echo __('Type &raquo; Buat'); ?>
+            <?php echo __('Type &raquo; Sunting &raquo; #') . $type->id . ' &middot; ' . $type->name; ?>
 
         </h2>
      <?php $__env->endSlot(); ?>
@@ -27,38 +27,29 @@
                             Ada kesalahan!
                         </div>
                         <div class="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
-                            <p>
                             <ul>
                                 <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li><?php echo e($error); ?></li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
-                            </p>
                         </div>
                     </div>
                 <?php endif; ?>
-                    <?php if(session('error')): ?>
-                        <div class="mb-5" role="alert">
-                            <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
-                                Terjadi Kesalahan!
-                            </div>
-                            <div class="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
-                                <p><?php echo e(session('error')); ?></p>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                <form class="w-full" action="<?php echo e(route('owner.types.store')); ?>" method="post" enctype="multipart/form-data">
+                <form class="w-full" action="<?php echo e(route('owner.types.update', $type->id)); ?>" method="post" enctype="multipart/form-data"
+                      onsubmit="return confirm('Apakah Anda yakin ingin menyimpan perubahan ini?')">
                     <?php echo csrf_field(); ?>
+                    <?php echo method_field('put'); ?>
+
                     <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                         <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="name">
-                                Nama*
+                                Nama
                             </label>
-                            <input value="<?php echo e(old('name')); ?>" name="name"
+                            <input value="<?php echo e(old('name') ?? $type->name); ?>" name="name"
                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                   type="text" placeholder="Nama" required>
+                                   id="name" type="text" placeholder="Nama">
                             <div class="mt-2 text-sm text-gray-500">
-                                Nama jenis. Contoh: Sedan, MPV, SUV, dsb. Wajib diisi.
+                                Nama jenis. Contoh: Sedan, MPV, SUV, dsb.
                             </div>
                         </div>
                     </div>
@@ -81,4 +72,4 @@
 <?php $component = $__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da; ?>
 <?php unset($__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da); ?>
 <?php endif; ?>
-<?php /**PATH C:\xampp\htdocs\Github\rent-car\resources\views/owner/types/create.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\Github\rent-car\resources\views/owner/types/edit.blade.php ENDPATH**/ ?>

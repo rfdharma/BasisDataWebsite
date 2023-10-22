@@ -12,20 +12,18 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div>
-                @if ($errors->any())
+                @if (session('error'))
                     <div class="mb-5" role="alert">
                         <div class="rounded-t bg-red-500 px-4 py-2 font-bold text-white">
                             Oops! Something went wrong.
                         </div>
                         <div class="rounded-b border border-t-0 border-red-400 bg-red-100 px-4 py-3 text-red-700">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                            {{ session('error') }}
                         </div>
                     </div>
                 @endif
+
+
 
                 <form class="w-full" action="{{ route('owner.vehicles.store') }}" method="post" enctype="multipart/form-data">
                     @csrf

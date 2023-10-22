@@ -37,6 +37,16 @@
                         </div>
                     </div>
                 <?php endif; ?>
+                    <?php if(session('error')): ?>
+                        <div class="mb-5" role="alert">
+                            <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
+                                Terjadi Kesalahan!
+                            </div>
+                            <div class="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
+                                <p><?php echo e(session('error')); ?></p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <form class="w-full" action="<?php echo e(route('owner.brands.store')); ?>" method="post">
                     <?php echo csrf_field(); ?>
                     <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">

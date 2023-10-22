@@ -14,8 +14,8 @@
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="py-12" style="margin-left: 70px;margin-right: 70px">
+        <div class="mx-auto max-w-auto sm:px-6 lg:px-8">
             <div class="mb-4">
                 <a href="<?php echo e(route('owner.vehicles.create')); ?>"
                    class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
@@ -28,58 +28,82 @@
 
                 </div>
             <?php endif; ?>
-            <div class="overflow-hidden shadow sm:rounded-md">
+            <div class="overflow-hidden shadow sm:rounded-md text-center">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <table class="table-auto w-full">
                         <thead>
                         <tr>
                             <th class="px-4 py-2">ID</th>
                             <th class="px-4 py-2">Name</th>
-                            <th class="px-4 py-2">Type</th>
                             <th class="px-4 py-2">Brand</th>
+                            <th class="px-4 py-2">Type</th>
+                            <th class="px-4 py-2">Transmission</th>
                             <th class="px-4 py-2">Price</th>
                             <th class="px-4 py-2">Features</th>
                             <th class="px-4 py-2">Year</th>
+                            <th class="px-4 py-2">Quantity</th>
                             <th class="px-4 py-2">Photos</th> <!-- Tambah kolom untuk menampilkan foto -->
-                            <th class="px-4 py-2">Actions</th>
+                            <th class="px-4 py-2">Actions Vehicle</th>
+                            <th class="px-4 py-2">Actions Plate Vehicle</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $__currentLoopData = $vehicles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $inventory = $vehicle->inventory;
+                            ?>
                             <tr>
                                 <td class="px-4 py-2"><?php echo e($vehicle->id); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->name); ?></td>
-                                <td class="px-4 py-2"><?php echo e($vehicle->type->name); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->brand->name); ?></td>
+                                <td class="px-4 py-2"><?php echo e($vehicle->type->name); ?></td>
+                                <td class="px-4 py-2"><?php echo e($vehicle->transmission); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->price); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->features); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->year); ?></td>
+                                <td class="px-4 py-2"><?php echo e($inventory->quantity); ?></td>
                                 <td class="px-4 py-2">
                                     <?php if($vehicle->photos): ?>
                                         <?php
                                             $photos = json_decode($vehicle->photos, true);
-                                            $photoName = $photos[0]['photos'];
+                                            $photoCount = count($photos);
                                         ?>
-                                        <img src="<?php echo e(asset('storage/' . $photoName)); ?>" alt="Vehicle Photo" style="max-width: 100px; max-height: 100px">
+
+                                        <?php if($photoCount > 0): ?>
+                                            <?php
+                                                $photoName = $photos[$photoCount - 1]['photos']; // Mengakses foto terakhir dalam array
+                                            ?>
+                                            <img src="<?php echo e(asset('storage/' . $photoName)); ?>" alt="Vehicle Photo" style="max-width: 100px; max-height: 100px">
+                                        <?php else: ?>
+                                            No Photos
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         No Photos
                                     <?php endif; ?>
 
+
                                 </td>
                                 <td class="px-4 py-2">
                                     <a href="<?php echo e(route('owner.vehicles.edit', $vehicle->id)); ?>"
-                                       class="px-4 py-2 font-bold text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700"
+                                       class="px-4 py-2 font-bold text-white bg-gray-500 rounded shadow-lg hover:bg-gray-700"
                                        onclick="return confirm('Are you sure you want to edit this vehicle?')">Edit</a>
                                     <form action="<?php echo e(route('owner.vehicles.destroy', $vehicle->id)); ?>" method="POST" class="inline"
                                           onsubmit="return confirm('Are you sure you want to delete this vehicle?')">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
                                         <button type="submit"
-                                                class="px-4 py-2 font-bold text-white bg-red-500 rounded shadow-lg hover:bg-red-700">Delete</button>
+                                                class="px-4 py-2 font-bold text-white bg-red-500 rounded shadow-lg hover:bg-red-600">Delete</button>
                                     </form>
+                                </td>
+
+                                <td class="px-4 py-2">
                                     <a href="<?php echo e(route('owner.vehicles.plates.index', $vehicle->id)); ?>"
                                        class="px-4 py-2 font-bold text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700">Add Plate</a>
+                                    <a href="<?php echo e(route('owner.vehicles.plates.index', $vehicle->id)); ?>"
+                                       class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">List Plate</a>
                                 </td>
+
+
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>

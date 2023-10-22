@@ -21,20 +21,19 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div>
-                <?php if($errors->any()): ?>
+                <?php if(session('error')): ?>
                     <div class="mb-5" role="alert">
                         <div class="rounded-t bg-red-500 px-4 py-2 font-bold text-white">
                             Oops! Something went wrong.
                         </div>
                         <div class="rounded-b border border-t-0 border-red-400 bg-red-100 px-4 py-3 text-red-700">
-                            <ul>
-                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li><?php echo e($error); ?></li>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </ul>
+                            <?php echo e(session('error')); ?>
+
                         </div>
                     </div>
                 <?php endif; ?>
+
+
 
                 <form class="w-full" action="<?php echo e(route('owner.vehicles.store')); ?>" method="post" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
