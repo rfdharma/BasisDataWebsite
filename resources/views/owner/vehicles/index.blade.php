@@ -87,10 +87,10 @@
                                 </td>
 
                                 <td class="px-4 py-2">
-                                    <a href="{{ route('owner.vehicles.plates.index', $vehicle->id) }}"
+                                    <a href="{{ route('owner.vehicles.plates.create', $vehicle->id) }}"
                                        class="px-4 py-2 font-bold text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700">Add Plate</a>
-                                    <a href="{{ route('owner.vehicles.plates.index', $vehicle->id) }}"
-                                       class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">List Plate</a>
+                                        <a href="{{ route('owner.vehicles.plates.index', $vehicle->id) }}"
+                                           class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">List Plate</a>
                                 </td>
 
 

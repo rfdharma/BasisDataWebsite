@@ -13,18 +13,19 @@ class VehiclePlateController extends Controller
     public function index($vehicleId)
     {
         $vehicle = Vehicle::find($vehicleId);
-        return view('owner.vehicles.addplate',compact('vehicle'));
+
+        return view('owner.vehicles.editplate', compact('vehicle'));
     }
     public function create($vehicleId)
     {
         $vehicle = Vehicle::find($vehicleId);
-        return view('owner.vehicles.index', compact('vehicle'));
+        return view('owner.vehicles.addplate', compact('vehicle'));
     }
 
     public function store(Request $request, $vehicleId)
     {
         $request->validate([
-            'plate' => 'required|unique:car_plates|string',
+            'plate' => 'required|unique:car_plates|string|max:8',
         ]);
 
         $carPlate = new CarPlate([
@@ -53,42 +54,38 @@ class VehiclePlateController extends Controller
             ->with('success', 'Car plate added successfully.');
     }
 
-    public function listView($vehicleId)
-    {
-        // Mengambil data yang diperlukan
-        $vehicle = Vehicle::find($vehicleId);
-        $inventory = $vehicle->inventory;
-
-        return view('owner.vehicles.editplate', compact('vehicle', 'inventory'));
-    }
-
-    public function edit($vehicleId, $plate)
+    public function edit($vehicle, $plate)
     {
         $carPlate = CarPlate::where('plate', $plate)
-            ->where('vehicles_id', $vehicleId)
+            ->where('vehicles_id', $vehicle)
             ->first();
 
         return view('owner.vehicles.editplate', compact('carPlate'));
     }
 
+
+
     public function update(Request $request, $vehicleId, $plate)
     {
-        $request->validate([
-            'plate' => 'required|string',
-        ]);
-
         $carPlate = CarPlate::where('plate', $plate)
             ->where('vehicles_id', $vehicleId)
             ->first();
 
         if ($carPlate) {
-            $carPlate->plate = $request->input('plate');
-            $carPlate->save();
-        }
+            $newPlateValue = $request->input('new_plate');
 
-        return redirect()->route('owner.vehicles.index')
-            ->with('success', 'Car plate updated successfully.');
+            $carPlate->plate = $newPlateValue;
+            $carPlate->save();
+
+            return redirect()->back()->with('success', 'Car plate updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Car plate not found.');
+        }
     }
+
+
+
+
 
     public function destroy($vehicleId, $plate)
     {
@@ -103,9 +100,15 @@ class VehiclePlateController extends Controller
             $vehicle = Vehicle::find($vehicleId);
             $inventory = $vehicle->inventory;
             $inventory->calculateQuantity();
-        }
 
-        return redirect()->route('owner.vehicles.index')
-            ->with('success', 'Car plate deleted successfully.');
+            return redirect()->route('owner.vehicles.plates.index', $vehicleId)
+                ->with('success', 'Car plate deleted successfully.');
+        } else {
+            // Handle the case where the car plate is not found
+            return redirect()->route('owner.vehicles.plates.index', $vehicleId)
+                ->with('error', 'Car plate not found.');
+        }
     }
+
+
 }

@@ -63,6 +63,7 @@ Route::prefix('owner')->name('owner.')->middleware([
     Route::resource('vehicles', OwnerItemController::class);
     Route::delete('vehicles/{vehicle}/delete-photo/{id}', [OwnerItemController::class, 'deletePhoto'])->name('vehicles.deletePhoto');
     Route::resource('vehicles.plates', VehiclePlateController::class);
+
 });
 
 Route::name('admin.')->middleware(['auth','role:ADMIN'])->group(function () {
