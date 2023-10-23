@@ -61,7 +61,7 @@
                                 <td class="px-4 py-2"><?php echo e($vehicle->price); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->features); ?></td>
                                 <td class="px-4 py-2"><?php echo e($vehicle->year); ?></td>
-                                <td class="px-4 py-2"><?php echo e($vehicle->quantity); ?></td>
+                                <td class="px-4 py-2"><?php echo e($vehicle->inventory->quantity); ?></td>
                                 <td class="px-4 py-2">
                                     <?php if($vehicle->photos): ?>
                                         <?php

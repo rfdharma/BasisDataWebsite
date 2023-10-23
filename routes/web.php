@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\DetailController;
 use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Owner\RoleAdminController;
 use App\Http\Controllers\Owner\VehiclePlateController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,7 @@ Route::prefix('owner')->name('owner.')->middleware([
     Route::resource('vehicles', OwnerItemController::class);
     Route::delete('vehicles/{vehicle}/delete-photo/{id}', [OwnerItemController::class, 'deletePhoto'])->name('vehicles.deletePhoto');
     Route::resource('vehicles.plates', VehiclePlateController::class);
+    Route::get('/register.admin', [RoleAdminController::class, 'index'])->name('register.admin');
 
 });
 

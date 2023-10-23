@@ -4,7 +4,11 @@
     <div class="container ml-6">
       <header class="mb-[30px]">
         <h2 class="mb-1 text-[26px] font-bold text-dark">Checkout your booking now</h2>
-        <p class="text-base text-secondary">We'll aid you in getting ready today.</p>
+          <h2 class="mb-1 text-[26px] font-bold text-dark">
+              {{$item->brand->name}} - {{$item->type->name}} - {{$item->name}}
+          </h2>
+
+          <p class="text-base text-secondary">We'll aid you in getting ready today.</p>
       </header>
 
       <div class="flex items-center gap-5 lg:justify-between">

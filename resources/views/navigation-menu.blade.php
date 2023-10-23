@@ -42,6 +42,9 @@
                   <x-jet-nav-link href="{{ route('owner.vehicles.index') }}" :active="request()->routeIs('owner.vehicles.index')">
                       {{ __('Vehicles') }}
                   </x-jet-nav-link>
+                  <x-jet-nav-link href="{{ route('owner.register.admin') }}" :active="request()->routeIs('owner.register.admin')">
+                      {{ __('Role Admin') }}
+                  </x-jet-nav-link>
               </div>
           @elseif(auth()->user()->roles == 'ADMIN')
               <div class="flex shrink-0 items-center">
