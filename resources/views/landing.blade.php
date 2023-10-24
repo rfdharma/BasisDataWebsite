@@ -77,7 +77,9 @@
                             <div class="card-popular">
                                 <div>
                                     <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                        {{ $vehicle->brand ? $vehicle->brand->name : '-' }}
                                         {{ $vehicle->name }}
+{{--                                        <p class="mb-[10px] text-base font-normal">({{ $vehicle->year }})</p>--}}
                                     </h5>
                                     <p class="text-sm font-normal text-secondary">
                                         {{ $vehicle->type ? $vehicle->type->name : '-' }}
@@ -98,9 +100,13 @@
                                         <span class="text-base font-bold text-primary">${{ number_format($vehicle->price) }}</span>/day
                                     </p>
                                     <!-- Rating -->
-                                    <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
-                                        ({{ $vehicle->star }}/5)
-                                        <img src="/svgs/ic-star.svg" alt="">
+                                    <p class="flex items-center text-xs font-semibold text-dark">
+                                        <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" class="ml-12" alt="" style="height: 10px;width: 10px">
+                                        {{ $vehicle->transmission }}
+                                    </p>
+                                    <p class="flex items-center text-xs font-semibold text-dark">
+                                        <img src="https://cdn3.iconfinder.com/data/icons/aviation-2/500/Aviation_agile-512.png" alt="" style="height: 15px;width: 15px">
+                                        ({{ $vehicle->capacity }})
                                     </p>
                                 </div>
                             </div>

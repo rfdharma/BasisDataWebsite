@@ -169,6 +169,11 @@
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
               </div>
+
+
+
+
+
           <?php else: ?>
               <div class="flex shrink-0 items-center">
                   <a href="<?php echo e(route('front.index')); ?>" class="hover:bg-gray-200 hover:underline text-md font-bold rounded-[18px]" style="">Rental-in</a>

@@ -14,6 +14,8 @@
                     <div class="card-popular <?php if($item->inventory->available === 0): ?> unavailable <?php endif; ?>" style="margin-top: 75px">
                         <div class="<?php if($item->inventory->available === 0): ?> opacity-30 <?php endif; ?>"">
                             <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                <?php echo e($item->brand ? $item->brand->name : '-'); ?>
+
                                 <?php echo e($item->name); ?>
 
                             </h5>
@@ -23,9 +25,7 @@
                             </p>
                             <a href="<?php echo e(route('front.detail', ['id' => $item->id])); ?>"
                                class="absolute inset-0
-              <?php if($item->inventory->available === 0): ?>
-                  disabled
-              <?php endif; ?>"
+                               <?php if($item->inventory->available === 0): ?> disabled <?php endif; ?>"
                                <?php if($item->inventory->available === 0): ?>
                                    style="pointer-events: none;"
                                 <?php endif; ?>>
@@ -39,9 +39,14 @@
                                 <span class="text-base font-bold text-primary">$<?php echo e(number_format($item->price)); ?></span>/day
                             </p>
                             <!-- Rating -->
-                            <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
-                                (<?php echo e($item->star); ?>/5)
-                                <img src="/svgs/ic-star.svg" alt="">
+                            <p class="flex items-center text-xs font-semibold text-dark">
+                                <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" class="ml-12" alt="" style="height: 10px;width: 10px">
+                                <?php echo e($item->transmission); ?>
+
+                            </p>
+                            <p class="flex items-center text-xs font-semibold text-dark">
+                                <img src="https://cdn3.iconfinder.com/data/icons/aviation-2/500/Aviation_agile-512.png" alt="" style="height: 15px;width: 15px">
+                                (<?php echo e($item->capacity); ?>)
                             </p>
                         </div>
                     </div>

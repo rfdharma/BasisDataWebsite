@@ -6,6 +6,7 @@
                     <div class="card-popular @if ($item->inventory->available === 0) unavailable @endif" style="margin-top: 75px">
                         <div class="@if ($item->inventory->available === 0) opacity-30 @endif"">
                             <h5 class="mb-[2px] text-lg font-bold text-dark">
+                                {{ $item->brand ? $item->brand->name : '-' }}
                                 {{ $item->name }}
                             </h5>
                             <p class="text-sm font-normal text-secondary">
@@ -13,9 +14,7 @@
                             </p>
                             <a href="{{ route('front.detail', ['id' => $item->id]) }}"
                                class="absolute inset-0
-              @if ($item->inventory->available === 0)
-                  disabled
-              @endif"
+                               @if ($item->inventory->available === 0) disabled @endif"
                                @if ($item->inventory->available === 0)
                                    style="pointer-events: none;"
                                 @endif>
@@ -29,9 +28,13 @@
                                 <span class="text-base font-bold text-primary">${{ number_format($item->price) }}</span>/day
                             </p>
                             <!-- Rating -->
-                            <p class="flex items-center gap-[2px] text-xs font-semibold text-dark">
-                                ({{ $item->star }}/5)
-                                <img src="/svgs/ic-star.svg" alt="">
+                            <p class="flex items-center text-xs font-semibold text-dark">
+                                <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" class="ml-12" alt="" style="height: 10px;width: 10px">
+                                {{ $item->transmission }}
+                            </p>
+                            <p class="flex items-center text-xs font-semibold text-dark">
+                                <img src="https://cdn3.iconfinder.com/data/icons/aviation-2/500/Aviation_agile-512.png" alt="" style="height: 15px;width: 15px">
+                                ({{ $item->capacity }})
                             </p>
                         </div>
                     </div>

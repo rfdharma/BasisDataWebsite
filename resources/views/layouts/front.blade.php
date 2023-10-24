@@ -23,6 +23,14 @@
 
   <!-- Styles -->
   @livewireStyles
+
+    <style>
+        .popup-blur {
+            backdrop-filter: blur(5px); /* Sesuaikan tingkat blur yang Anda inginkan */
+            background-color: rgba(0, 0, 0, 0.5); /* Warna latar belakang dengan transparansi */
+        }
+
+    </style>
 </head>
 
 <body>

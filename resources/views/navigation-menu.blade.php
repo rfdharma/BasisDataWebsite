@@ -57,6 +57,11 @@
                       {{ __('Bookings') }}
                   </x-jet-nav-link>
               </div>
+{{--              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
+{{--                  <x-jet-nav-link href="{{ route('admin.payments.index') }}" :active="request()->routeIs('admin.payments.index')">--}}
+{{--                      {{ __('Payments') }}--}}
+{{--                  </x-jet-nav-link>--}}
+{{--              </div>--}}
           @else
               <div class="flex shrink-0 items-center">
                   <a href="{{ route('front.index') }}" class="hover:bg-gray-200 hover:underline text-md font-bold rounded-[18px]" style="">Rental-in</a>

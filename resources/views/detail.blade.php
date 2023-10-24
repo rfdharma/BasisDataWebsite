@@ -10,7 +10,7 @@
                         <div class="grid grid-cols-4 items-center gap-3 md:gap-5">
                             @foreach($item->photos as $photo)
                                 <div>
-                                    <a href="#!" @click="changeActive(index)">
+                                    <a href="{{ asset('storage/' . $photo['photos']) }}" @click="changeActive(index)" target="_blank">
                                         <img src="{{ asset('storage/' . $photo['photos']) }}" alt="" class="thumbnail" :class="{ selected: index == activeThumbnail }">
                                     </a>
                                 </div>
@@ -26,21 +26,23 @@
                             <div class="max-w-[230px] pb-5">
                                 <h1 class="mb-[6px] text-[28px] font-bold leading-[42px] text-dark">
                                     {{ $item->brand->name }} {{ $item->name }}
+                                    <p class="mb-[10px] text-base font-normal">Keluaran ({{ $item->year }})</p>
                                 </h1>
+
                                 <p class="mb-[10px] text-base font-normal text-secondary">{{ $item->type->name }}</p>
                                 <div class="flex items-center gap-2">
-                                <span class="flex items-center gap-1">
-                                    @for ($i = 0; $i < floor($item->star); $i++)
-                                        <img src="/svgs/ic-star.svg" class="h-[22px] w-[22px]" alt="">
-                                    @endfor
-                                </span>
-                                    <p class="mt-[2px] text-base font-semibold text-dark">
-                                        ({{ number_format($item->review) }})
+                                    <p class="flex items-center text-xs font-semibold text-dark">
+                                        <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" alt="" style="height: 10px;width: 10px">
+                                        {{ $item->transmission }}
+                                    </p>
+                                    <p class="flex items-center text-xs font-semibold text-dark">
+                                        <img src="https://cdn3.iconfinder.com/data/icons/aviation-2/500/Aviation_agile-512.png" alt="" style="height: 15px;width: 15px">
+                                        ({{ $item->capacity }})
                                     </p>
                                 </div>
                             </div>
                             <!-- Features -->
-                            <ul class="flex-start flex flex-col gap-4 pt-5 pb-[25px]">
+                            <ul class="flex-start flex flex-col gap-4 pt-5 pb-2">
                                 @php
                                     $features = explode(',', $item->features);
                                 @endphp

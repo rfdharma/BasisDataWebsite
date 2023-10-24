@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\CarPlate;
+use App\Models\Inventories;
 use App\Models\Notification;
+use App\Models\RentalPlate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -20,7 +23,7 @@ class BookingController extends Controller
 	 */
     public function index()
     {
-        $bookings = Booking::with(['brand', 'user'])->get();
+        $bookings = Booking::with(['brand', 'user','payments'])->get();
 
         return view('admin.bookings.index', compact('bookings'));
     }
@@ -92,8 +95,8 @@ class BookingController extends Controller
                 $booking->payment_status = 'failed';
             } elseif ($newStatus == 'pending') {
                 $booking->payment_status = 'pending';
-            } elseif ($newStatus == 'done' && $booking->payment_status == 'pending') {
-                $booking->status = 'pending';
+            } elseif ($newStatus == 'confirmed') {
+                $booking->payment_status = 'unpaid';
             }
         }
 
@@ -106,12 +109,66 @@ class BookingController extends Controller
                 $booking->status = 'failed';
             } elseif ($newPaymentStatus == 'success') {
                 $booking->status = 'done';
+
+                // Create a new record in rental_plates
+                $bookingVehicleId = $booking->vehicle->id;
+                $carPlate = CarPlate::where('vehicles_id', $bookingVehicleId)->inRandomOrder()->first();
+
+                if ($carPlate) {
+                    $existingRentalPlate = RentalPlate::where('vehicle_id', $bookingVehicleId)
+                        ->where('plate', $carPlate->plate)
+                        ->first();
+
+                    if ($existingRentalPlate) {
+                        // Cari nomor plat lain yang belum ada di rental_plates
+                        $carPlate = CarPlate::where('vehicles_id', $bookingVehicleId)
+                            ->whereNotIn('plate', RentalPlate::where('vehicle_id', $bookingVehicleId)->pluck('plate'))
+                            ->inRandomOrder()
+                            ->first();
+                    }
+
+                    if ($carPlate) {
+                        $rentalPlate = new RentalPlate([
+                            'booking_id' => $booking->id,
+                            'vehicle_id' => $bookingVehicleId,
+                            'plate' => $carPlate->plate,
+                        ]);
+                        $rentalPlate->save();
+
+                        // Decrement the inventory quantity
+                        $inventory = Inventories::where('vehicle_id', $bookingVehicleId)->first();
+                        if ($inventory) {
+                            $inventory->decrement('quantity');
+                            if ($inventory->quantity === 0) {
+                                $inventory->update(['available' => 0]);
+                            }
+                        }
+
+                    }
+                }
+            } elseif ($newPaymentStatus == 'verifikasi') {
+                $booking->status = 'confirmed';
             }
         }
 
         // Proses perubahan status pengembalian
         if ($request->has('return_status')) {
-            $booking->return_status = $request->input('return_status');
+            $returnStatus = $request->input('return_status');
+            $booking->return_status = $returnStatus;
+
+            if ($returnStatus === 'returned' || $returnStatus === 'expired') {
+                // Hapus record di rental_plates
+                RentalPlate::where('booking_id', $booking->id)->delete();
+
+                // Tambahkan kembali ke inventory
+                $inventory = Inventories::where('vehicle_id', $booking->vehicle_id)->first();
+                if ($inventory) {
+                    $inventory->increment('quantity');
+                    if ($inventory->quantity > 0) {
+                        $inventory->update(['available' => 1]);
+                    }
+                }
+            }
         }
 
         // Simpan perubahan ke database
@@ -139,13 +196,15 @@ class BookingController extends Controller
             $booking->notifications()->save($notification);
         }
 
-
         // Redirect kembali ke halaman sebelumnya atau halaman yang sesuai
         return redirect()->back();
     }
 
 
-	/**
+
+
+
+    /**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id

@@ -13,7 +13,7 @@
       <header class="mb-[30px]">
         <h2 class="mb-1 text-[26px] font-bold text-dark">Checkout your booking now</h2>
           <h2 class="mb-1 text-[26px] font-bold text-dark">
-              <?php echo e($item->brand->name); ?> - <?php echo e($item->type->name); ?> - <?php echo e($item->name); ?>
+              <?php echo e($item->brand->name); ?> <?php echo e($item->type->name); ?> <?php echo e($item->name); ?>
 
           </h2>
 

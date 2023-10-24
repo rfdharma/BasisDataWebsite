@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Front\CatalogController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\DetailController;
@@ -43,9 +44,10 @@ Route::name('front.')->group(function () {
                 return view('success');
             }
         })->name('book.success');
-
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
-	});
+        Route::post('/orders/{id}', [OrderController::class, 'store'])->name('orders.store');
+
+    });
 });
 
 Route::prefix('owner')->name('owner.')->middleware([
@@ -69,6 +71,7 @@ Route::prefix('owner')->name('owner.')->middleware([
 Route::name('admin.')->middleware(['auth','role:ADMIN'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('bookings', AdminBookingController::class);
+//    Route::resource('payments',PaymentsController::class);
 });
 
 
