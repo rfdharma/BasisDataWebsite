@@ -86,7 +86,7 @@
                                 </div>
                                 @if ($vehicle->photos->count() > 0)
                                     @php
-                                        $photo = $vehicle->photos->last(); // Get the last photo associated with the vehicle
+                                        $photo = $vehicle->photos->last();
                                     @endphp
                                     <img src="{{ asset('storage/' . $photo->photos) }}" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="{{ $vehicle->name }} Photo">
                                 @else

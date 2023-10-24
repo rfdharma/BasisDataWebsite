@@ -28,12 +28,29 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
+        // Check if the current user is an OWNER
+        $isOwner = false;
+
+        if (auth()->check() && auth()->user()->roles == 'OWNER') {
+            $isOwner = true;
+        }
+
+        // Debugging: Dump relevant values
+        dd($input, $isOwner);
+
+        // Set the role based on whether the user is an owner
+        $role = $isOwner ? 'ADMIN' : 'USER';
+
+        // Debugging: Dump the role
+        dd($role);
+
+        // Create the user with the determined role
         return User::create([
             'name' => $input['name'],
             'phone' => $input['phone'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'roles' => 'USER'
+            'roles' => $role,
         ]);
     }
 }

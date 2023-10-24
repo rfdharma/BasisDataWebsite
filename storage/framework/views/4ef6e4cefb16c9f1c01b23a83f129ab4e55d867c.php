@@ -100,7 +100,7 @@
                                 </div>
                                 <?php if($vehicle->photos->count() > 0): ?>
                                     <?php
-                                        $photo = $vehicle->photos->last(); // Get the last photo associated with the vehicle
+                                        $photo = $vehicle->photos->last();
                                     ?>
                                     <img src="<?php echo e(asset('storage/' . $photo->photos)); ?>" class="h-[150px] w-full min-w-[216px] rounded-[18px]" alt="<?php echo e($vehicle->name); ?> Photo">
                                 <?php else: ?>

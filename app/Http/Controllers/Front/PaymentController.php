@@ -20,18 +20,15 @@ class PaymentController extends Controller
 
 	public function update(Request $request, $bookingId)
 	{
-		// Validate
+
 		$request->validate([
 			'payment_method' => 'required',
 		]);
 
-		// Load booking data
 		$booking = Booking::findOrFail($bookingId);
 
-		// Set payment method data
 		$booking->payment_method = $request->payment_method;
 
-		// Handle midtrans payment_method
 		if ($request->payment_method == 'midtrans') {
 			// Config midtrans
 			Config::$serverKey = config('services.midtrans.serverKey');
@@ -45,10 +42,9 @@ class PaymentController extends Controller
 			$body = $response->getBody();
 			$rate = json_decode($body)->rates->IDR;
 
-			// Convert to IDR
 			$totalPrice = $booking->total_price * $rate;
 
-			// Create Midtrans Params
+
 			// Docs : https://api-docs.midtrans.com/#charge-a-credit-card
 			$midtransParams = [
 				'transaction_details' => [

@@ -7,23 +7,11 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-     <?php $__env->slot('header', null, []); ?> 
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <?php echo e(__('Role Admin')); ?>
-
-        </h2>
-     <?php $__env->endSlot(); ?>
     <section class="relative bg-darkGrey py-[70px]">
         <div class="container">
             <div class="flex flex-col items-center">
-                <header class="mb-[30px] text-center">
-                    <h2 class="mb-1 text-[26px] font-bold text-dark">
-                        Sign Up & Drive
-                    </h2>
-                    <p class="text-base text-secondary">We will help you get ready today</p>
-                </header>
                 <!-- Form Card -->
-                <form action="<?php echo e(route('register')); ?>" class="w-full max-w-[490px] rounded-3xl bg-white p-[30px] pb-10" id="registerForm" method="POST"
+                <form action="<?php echo e(route('owner.create.admin')); ?>" class="w-full max-w-[490px] rounded-3xl bg-white p-[30px] pb-10" id="registerForm" method="POST"
                       enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <!-- Validation Errors -->
@@ -45,18 +33,18 @@
 <?php endif; ?>
                     </div>
                     <!-- User Photo -->
-                    <div class="mb-[50px] flex justify-center">
-                        <div class="relative">
-                            <img src="/svgs/ic-default-photo.svg" class="h-[120px] w-[120px] rounded-full" alt="" id="imageSrc">
-                            <a href="javascript:void(0);" id="btnUploadPhoto" class="">
-                                <img src="/svgs/ic-btn_upload.svg" class="absolute right-[-7px] bottom-[9px] h-[36px] w-[36px] rounded-full" alt="">
-                            </a>
-                            <a href="javascript:void(0);" id="btnDeletePhoto" class="hidden">
-                                <img src="/svgs/ic-btn_delete.svg" class="absolute right-[-7px] bottom-[9px] h-[36px] w-[36px] rounded-full" alt="">
-                            </a>
-                        </div>
-                        <input type="file" name="photo" id="photo" class="hidden" accept="image/x-png,image/jpg,image/jpeg">
-                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="grid grid-cols-2 items-center gap-y-6 gap-x-4 lg:gap-x-[30px]">
                         <!-- Full Name -->
                         <div class="col-span-2 flex flex-col gap-3">
@@ -102,28 +90,22 @@
                             <input type="password" name="password_confirmation" id="password_confirmation"
                                    class="rounded-[50px] border border-grey px-[26px] py-4 text-base font-medium placeholder:font-normal placeholder:text-secondary focus:border-primary focus:outline-none"
                                    placeholder="Confirm password" required>
-                            <?php if(Route::has('password.request')): ?>
-                                <a href="<?php echo e(route('password.request')); ?>" class="mt-1 text-right text-base text-secondary underline underline-offset-2">
-                                    Forgot My Password
-                                </a>
-                            <?php endif; ?>
 
                         </div>
                         <!-- Button -->
                         <div class="col-span-2 mt-[26px]">
                             <!-- Button Primary -->
                             <div class="group rounded-full bg-primary p-1">
-                                <a href="#!" class="btn-primary" id="registerButton">
+                                <a href="#!" class="btn-primary text-white p-1 text-center" id="registerButton">
                                     <p>
                                         Create My Account
                                     </p>
-                                    <img src="/svgs/ic-arrow-right.svg" alt="">
                                 </a>
                                 <button type="submit" class="hidden"></button>
                             </div>
                         </div>
                         <!-- Create New Account Button -->
-                        <div class="col-span-2">
+                        <div class="col-span-2 text-center">
                             <a href="<?php echo e(route('login')); ?>" class="btn-secondary">
                                 <p>Sign In</p>
                             </a>
