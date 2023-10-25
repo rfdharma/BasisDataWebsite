@@ -7,39 +7,40 @@
     </x-slot>
 
     <div class="py-12 items-center">
-        <div class="mx-auto max-w-full sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-full sm:px-6 lg:px-1">
             <div class="overflow-hidden bg-white shadow sm:rounded-md">
                 <div class="p-2">
-                    <table class="w-full border divide-y divide-gray-200 text-center">
+                    <table class="w-full table-auto border divide-y divide-gray-200 text-center">
                         <thead>
                         <tr>
-                            <th class="py-2 border-2">Invoice</th>
-                            <th class="py-2 border-2">User</th>
-                            <th class="py-2 border-2">Vehicle</th>
-                            <th class="py-2 border-2">Start</th>
-                            <th class="py-2 border-2">End</th>
-                            <th class="py-2 border-2">Booking</th>
-                            <th class="py-2 border-2">Payments</th>
-                            <th class="py-2 border-2">Return</th>
-                            <th class="py-2 border-2">Total Paid</th>
-                            <th class="py-2 border-2">Available</th>
-                            <th class="py-2 border-2">Payment Proof</th>
-                            <th class="py-2 border-2">Actions</th>
+                            <th class="px-1 py-2 border-2">Invoice</th>
+                            <th class="px-2 py-2 border-2">User</th>
+                            <th class="px-1 py-3 border-2">Vehicle</th>
+                            <th class="px-1 py-2 border-2">Start</th>
+                            <th class="px-1 py-2 border-2">End</th>
+                            <th class="px-[26px] py-3 border-2">Booking</th>
+                            <th class="px-[26px] py-3 border-2">Payments</th>
+                            <th class="px-[26px] py-3 border-2">Return</th>
+                            <th class="px-3 py-2 border-2">Paid</th>
+                            <th class="px-3 py-2 border-2">Available</th>
+                            <th class="px-3 py-2 border-2">Proof</th>
+                            <th class="px-3 py-2 border-2">Plate</th>
+                            <th class="px-3 py-2 border-2">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($bookings as $booking)
                             <tr>
-                                <td class="text-center py-2 px-1 border-2">{{ $booking->id }}</td>
-                                <td class="text-center py-2 px-1 border-2">{{ $booking->user->name }}</td>
-                                <td class="text-center py-2 px-1 border-2">
+                                <td class="text-center px-0 py-2 border-2">{{ $booking->id }}</td>
+                                <td class="text-left px-2 py-2 border-2">{{ $booking->user->name }}</td>
+                                <td class="text-left px-1 py-4 border-2">
                                     {{ $booking->vehicle->brand->name }}
                                     {{ $booking->vehicle->type->name }}
                                     {{ $booking->vehicle->name }}
                                 </td>
-                                <td class="text-center py-2 px-1 border-2">{{ $booking->start_date }}</td>
-                                <td class="text-center py-2 px-1 border-2">{{ $booking->end_date }}</td>
-                                <td class="text-center py-2 px-1 border-2">
+                                <td class="text-center py-2 px-0 border-2">{{ $booking->start_date }}</td>
+                                <td class="text-center py-2 px-0 border-2">{{ $booking->end_date }}</td>
+                                <td class="text-left px-4 py-3 border-2" >
                                     <form method="POST" action="{{ route('admin.bookings.update', $booking->id) }}" onsubmit="return confirm('Are you sure you want to update the data?')">
                                         @csrf
                                         @method('PUT')
@@ -59,7 +60,7 @@
                                         @endif
                                         </select>
                                 </td>
-                                <td class=" text-center py-2 px-1 border-2">
+                                <td class=" text-left px-4 py-2 border-2">
                                     <select name="payment_status" class="border-0 rounded-3xl block w-full outline-none @if (($booking->status != 'done' && $booking->status != 'pending' && $booking->payment_status != 'unpaid' && $booking->payment_status != 'failed') || ($booking->status == 'confirmed' && $booking->payment_status != 'unpaid')) border-2 border-blue-500 @endif" @if (($booking->status == 'done' && $booking->payment_status != 'verifikasi') || ($booking->status == 'confirmed' && $booking->payment_status != 'verifikasi') || ($booking->payment_status == 'pending') || ($booking->payment_status == 'failed')) disabled @endif>
                                         @if($booking->status == 'confirmed' && $booking->payment_status == 'verifikasi')
                                             <option value="verifikasi" {{ $booking->payment_status == 'verifikasi' ? 'selected' : '' }}>Verifikasi</option>
@@ -73,15 +74,15 @@
                                         @endif
                                     </select>
                                 </td>
-                                <td class="text-center py-2 px-1 border-2">
+                                <td class="text-left px-4 py-2 border-2">
                                     <select name="return_status" class="border-0 rounded-3xl block w-full outline-none @if ($booking->status == 'done' && $booking->return_status == 'not returned') border-2 border-blue-500 @endif" @if ($booking->status != 'done' || $booking->return_status != 'not returned') disabled @endif>
                                         <option value="not returned" {{ $booking->return_status == 'not returned' ? 'selected' : '' }}>Not Returned</option>
                                         <option value="returned" {{ $booking->return_status == 'returned' ? 'selected' : '' }}>Returned</option>
                                         <option value="expired" {{ $booking->return_status == 'expired' ? 'selected' : '' }}>Expired</option>
                                     </select>
                                 </td>
-                                <td class="text-center py-2 px-2 border-2">{{ $booking->total_price }}</td>
-                                <td class="text-center py-2 px-2 border-2">
+                                <td class="text-center py-2 px-1 border-2">{{ $booking->total_price }}</td>
+                                <td class="text-center py-2 px-1 border-2">
                                     @if ($booking->vehicle->inventory->available == 1)
                                         True
                                     @else
@@ -89,7 +90,7 @@
                                     @endif
                                 </td>
 
-                                <td class="text-center py-2 px-2 border-2">
+                                <td class="text-center px-1 py-2 border-2">
                                     @if($booking->payments->isNotEmpty())
                                         @foreach($booking->payments as $payment)
                                             @if (!empty($payment->photos_payment))
@@ -102,6 +103,15 @@
                                         None
                                     @endif
                                 </td>
+
+                                <td class="text-center py-2 px-2 border-2">
+                                    @foreach ($booking->rentalPlates()->withTrashed()->get() as $rentalPlate)
+                                        {{ $rentalPlate->plate }}
+                                        <br>
+                                    @endforeach
+                                </td>
+
+
 
 
                                 <td class="py-2 px-2 border-2">

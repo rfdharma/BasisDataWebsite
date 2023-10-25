@@ -29,8 +29,8 @@
                         <th class="py-2 px-3 text-center">Vehicle</th>
                         <th class="py-2 px-3 text-center">Start Date</th>
                         <th class="py-2 px-3 text-center">End Date</th>
-                        <th class="py-2 px-3 text-center">Booking</th>
                         <th class="py-2 px-3 text-center">Price</th>
+                        <th class="py-2 px-3 text-center">Booking</th>
                         <th class="py-2 px-3 text-center">Payment</th>
                         <th class="py-2 px-3 text-center">Return</th>
                     </tr>
@@ -39,8 +39,8 @@
                     @foreach ($userBookings as $booking)
                         <tr class="border-b">
                             <td class="py-2 px-3">{{ $booking->id }}</td>
-                            <td class="py-2 px-3">{{ $booking->name }}</td>
-                            <td class="py-2 px-3">
+                            <td class="py-2 px-3 text-left">{{ $booking->name }}</td>
+                            <td class="py-2 px-3 text-left">
                                 {{ $booking->vehicle->brand->name }}
                                 {{ $booking->vehicle->type->name }}
                                 {{ $booking->vehicle->name }}
@@ -48,8 +48,8 @@
 
                             <td class="py-2 px-3">{{ $booking->start_date }}</td>
                             <td class="py-2 px-3">{{ $booking->end_date }}</td>
-                            <td class="py-2 px-3">{{ $booking->status }}</td>
                             <td class="py-2 px-3">{{ $booking->total_price }}</td>
+                            <td class="py-2 px-3 @if($booking->status == 'done') text-green-500 font-bold @elseif($booking->status == 'failed') text-red-500 font-bold @endif">{{ $booking->status }}</td>
                             @if ($booking->payment_status === 'unpaid')
                                 <td class="py-2 px-3">
                                     <button class="bg-red-500 rounded w-full text-white hover:bg-red-600 btn" data-target="popup-{{ $booking->id }}">Bayar</button>
@@ -111,10 +111,10 @@
                                     </div>
                                 </td>
                             @else
-                                <td class="py-2 px-3">{{ $booking->payment_status }}</td>
+                                <td class="py-2 px-3 @if($booking->payment_status == 'success') text-green-500 font-bold @elseif($booking->payment_status == 'failed') text-red-500 font-bold @endif">{{ $booking->payment_status }}</td>
 
                             @endif
-                                <td class="py-2 px-3">
+                                <td class="py-2 px-3 @if($booking->return_status == 'not returned') text-red-500 font-bold @endif">
                                     @if($booking->status != 'done')
                                         -
                                     @else

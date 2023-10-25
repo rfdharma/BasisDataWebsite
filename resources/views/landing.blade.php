@@ -101,7 +101,7 @@
                                     </p>
                                     <!-- Rating -->
                                     <p class="flex items-center text-xs font-semibold text-dark">
-                                        <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" class="ml-12" alt="" style="height: 10px;width: 10px">
+                                        <img src="https://static.vecteezy.com/system/resources/previews/026/546/373/non_2x/solid-icon-for-capacity-vector.jpg" class="ml-6" alt="" style="height: 10px;width: 10px">
                                         {{ $vehicle->transmission }}
                                     </p>
                                     <p class="flex items-center text-xs font-semibold text-dark">

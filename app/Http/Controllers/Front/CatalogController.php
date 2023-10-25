@@ -13,7 +13,20 @@ class CatalogController extends Controller
 {
     public function index()
     {
-        $items = Vehicle::with(['type', 'brand','inventory'])->latest()->get(); // Mengambil semua item
+        $items = Vehicle::with(['type', 'brand', 'inventory'])->latest()->get();
+
+        // Memisahkan item yang 'available' adalah true dan false
+        $availableItems = $items->filter(function ($item) {
+            return $item->inventory->available;
+        });
+
+        $unavailableItems = $items->filter(function ($item) {
+            return !$item->inventory->available;
+        });
+
+        // Menggabungkan item yang 'available' adalah true diikuti oleh yang 'available' adalah false
+        $sortedItems = $availableItems->concat($unavailableItems);
+
         if (auth()->check()) {
             // Pengguna diotentikasi
             $notification = Notification::where('user_id', auth()->user()->id)->latest()->get();
@@ -29,11 +42,14 @@ class CatalogController extends Controller
         } else {
             // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
         }
+
         View::share('notification', $notification);
+
         return view('catalog', [
-            'items' => $items,
+            'items' => $sortedItems,
             'notification' => $notification
         ]);
     }
+
 
 }

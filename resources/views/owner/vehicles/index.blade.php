@@ -19,17 +19,17 @@
                 </div>
             @endif
             <div class="overflow-hidden shadow sm:rounded-md text-center">
-                <div class="px-4 py-5 bg-white sm:p-6">
-                    <table class="text-center table-auto border w-full">
+                <div class="px-2 py-5 bg-white sm:p-6">
+                    <table class="text-center table-auto w-full border w-full">
                         <thead>
                         <tr>
                             <th class="px-4 py-2 border-2">ID</th>
                             <th class="px-4 py-2 border-2">Brand</th>
                             <th class="px-4 py-2 border-2">Type</th>
                             <th class="px-4 py-2 border-2">Name</th>
-                            <th class="px-4 py-2 border-2">Transmission</th>
+                            <th class="px-3 py-2 border-2">Transmission</th>
                             <th class="px-4 py-2 border-2">Price</th>
-                            <th class="px-4 py-2 border-2">Features</th>
+                            <th class="px-3 py-2 border-2">Features</th>
                             <th class="px-4 py-2 border-2">Year</th>
                             <th class="px-2 py-2 border-2">Quantity</th>
                             <th class="px-2 py-2 border-2">Total</th>
@@ -45,14 +45,14 @@
                             @endphp
                             <tr>
                                 <td class="px-4 py-2 border-2">{{ $vehicle->id }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->brand->name }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->type->name }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->name }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->transmission }}</td>
+                                <td class="px-4 py-2 border-2 text-left">{{ $vehicle->brand->name }}</td>
+                                <td class="px-4 py-2 border-2 text-left">{{ $vehicle->type->name }}</td>
+                                <td class="px-4 py-2 border-2 text-left">{{ $vehicle->name }}</td>
+                                <td class="px-4 py-2 border-2 text-left">{{ $vehicle->transmission }}</td>
                                 <td class="px-4 py-2 border-2">{{ $vehicle->price }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->features }}</td>
+                                <td class="px-4 py-2 border-2 text-left">{{ $vehicle->features }}</td>
                                 <td class="px-4 py-2 border-2">{{ $vehicle->year }}</td>
-                                <td class="px-4 py-2 border-2">{{ $vehicle->inventory->quantity }}</td>
+                                <td class="px-4 py-2 border-2">{{ $vehicle->inventory ? $vehicle->inventory->quantity : 'None' }}</td>
                                 <td class="px-4 py-2 border-2">{{ $vehicle->carPlates()->count() }}</td>
                                 <td class="px-4 py-2 border-2">
                                     @if ($vehicle->photos)
@@ -65,7 +65,9 @@
                                             @php
                                                 $photoName = $photos[$photoCount - 1]['photos']; // Mengakses foto terakhir dalam array
                                             @endphp
+                                        <a href="{{ asset('storage/' . $photoName)}}" target="_blank">
                                             <img src="{{ asset('storage/' . $photoName) }}" alt="Vehicle Photo" style="max-width: 100px; max-height: 100px">
+                                        </a>
                                         @else
                                             No Photos
                                         @endif
@@ -75,25 +77,35 @@
 
 
                                 </td>
-                                <td class="px-4 py-2 border-2">
-                                    <a href="{{ route('owner.vehicles.edit', $vehicle->id) }}"
-                                       class="px-1 py-1   text-white bg-gray-500 rounded shadow-lg hover:bg-gray-700"
-                                       onclick="return confirm('Are you sure you want to edit this vehicle?')">Edit</a>
-                                    <form action="{{ route('owner.vehicles.destroy', $vehicle->id) }}" method="POST" class="inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this vehicle?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="px-1 py-1   text-white bg-red-500 rounded shadow-lg hover:bg-red-600">Delete</button>
-                                    </form>
+                                <td class="px-2 py-2 border-2">
+                                    <div>
+                                        <a href="{{ route('owner.vehicles.edit', $vehicle->id) }}"
+                                           class="px-1 py-1 mb-2 text-white bg-gray-500 rounded shadow-lg hover:bg-gray-700 block"
+                                           onclick="return confirm('Are you sure you want to edit this vehicle?">Edit</a>
+                                    </div>
+                                    <div>
+                                        <form action="{{ route('owner.vehicles.destroy', $vehicle->id) }}" method="POST" class="block"
+                                              onsubmit="return confirm('Are you sure you want to delete this vehicle?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="px-1 py-1 text-white bg-red-500 rounded shadow-lg hover:bg-red-600 w-full block">Delete</button>
+                                        </form>
+                                    </div>
                                 </td>
 
-                                <td class="px-4 py-2 border-2">
-                                    <a href="{{ route('owner.vehicles.plates.create', $vehicle->id) }}"
-                                       class="px-1 py-1   text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700">Add Plate</a>
+
+                                <td class="px-2 py-2 border-2">
+                                    <div>
+                                        <a href="{{ route('owner.vehicles.plates.create', $vehicle->id) }}"
+                                           class="px-2 py-1 mb-2 text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700 block">Add Plate</a>
+                                    </div>
+                                    <div>
                                         <a href="{{ route('owner.vehicles.plates.index', $vehicle->id) }}"
-                                           class="px-1 py-1   text-white bg-green-500 rounded shadow-lg hover:bg-green-700">List Plate</a>
+                                           class="px-2 py-1 text-white bg-green-500 rounded shadow-lg hover:bg-green-700 block">List All Plate</a>
+                                    </div>
                                 </td>
+
 
 
                             </tr>

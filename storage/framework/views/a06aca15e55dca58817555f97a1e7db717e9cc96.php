@@ -37,8 +37,8 @@
                         <th class="py-2 px-3 text-center">Vehicle</th>
                         <th class="py-2 px-3 text-center">Start Date</th>
                         <th class="py-2 px-3 text-center">End Date</th>
-                        <th class="py-2 px-3 text-center">Booking</th>
                         <th class="py-2 px-3 text-center">Price</th>
+                        <th class="py-2 px-3 text-center">Booking</th>
                         <th class="py-2 px-3 text-center">Payment</th>
                         <th class="py-2 px-3 text-center">Return</th>
                     </tr>
@@ -47,8 +47,8 @@
                     <?php $__currentLoopData = $userBookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr class="border-b">
                             <td class="py-2 px-3"><?php echo e($booking->id); ?></td>
-                            <td class="py-2 px-3"><?php echo e($booking->name); ?></td>
-                            <td class="py-2 px-3">
+                            <td class="py-2 px-3 text-left"><?php echo e($booking->name); ?></td>
+                            <td class="py-2 px-3 text-left">
                                 <?php echo e($booking->vehicle->brand->name); ?>
 
                                 <?php echo e($booking->vehicle->type->name); ?>
@@ -59,8 +59,8 @@
 
                             <td class="py-2 px-3"><?php echo e($booking->start_date); ?></td>
                             <td class="py-2 px-3"><?php echo e($booking->end_date); ?></td>
-                            <td class="py-2 px-3"><?php echo e($booking->status); ?></td>
                             <td class="py-2 px-3"><?php echo e($booking->total_price); ?></td>
+                            <td class="py-2 px-3 <?php if($booking->status == 'done'): ?> text-green-500 font-bold <?php elseif($booking->status == 'failed'): ?> text-red-500 font-bold <?php endif; ?>"><?php echo e($booking->status); ?></td>
                             <?php if($booking->payment_status === 'unpaid'): ?>
                                 <td class="py-2 px-3">
                                     <button class="bg-red-500 rounded w-full text-white hover:bg-red-600 btn" data-target="popup-<?php echo e($booking->id); ?>">Bayar</button>
@@ -124,10 +124,10 @@
                                     </div>
                                 </td>
                             <?php else: ?>
-                                <td class="py-2 px-3"><?php echo e($booking->payment_status); ?></td>
+                                <td class="py-2 px-3 <?php if($booking->payment_status == 'success'): ?> text-green-500 font-bold <?php elseif($booking->payment_status == 'failed'): ?> text-red-500 font-bold <?php endif; ?>"><?php echo e($booking->payment_status); ?></td>
 
                             <?php endif; ?>
-                                <td class="py-2 px-3">
+                                <td class="py-2 px-3 <?php if($booking->return_status == 'not returned'): ?> text-red-500 font-bold <?php endif; ?>">
                                     <?php if($booking->status != 'done'): ?>
                                         -
                                     <?php else: ?>

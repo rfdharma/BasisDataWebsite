@@ -158,28 +158,28 @@
                         </div>
                     </div>
 
-                    <!-- Fields for Star and Review -->
-                    <div class="-mx-3 mt-4 mb-6 grid grid-cols-3 gap-3 px-3">
-                        <div class="w-full">
-                            <label class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700" for="star">Star</label>
-                            <input value="{{ old('star') }}" name="star"
-                                   class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                                   type="number" placeholder="Star" min="0" max="5" step=".01">
-                            <div class="mt-2 text-sm text-gray-500">
-                                Star rating of the vehicle. Numeric. E.g., 4.5. Optional.
-                            </div>
-                        </div>
+{{--                    <!-- Fields for Star and Review -->--}}
+{{--                    <div class="-mx-3 mt-4 mb-6 grid grid-cols-3 gap-3 px-3">--}}
+{{--                        <div class="w-full">--}}
+{{--                            <label class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700" for="star">Star</label>--}}
+{{--                            <input value="{{ old('star') }}" name="star"--}}
+{{--                                   class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"--}}
+{{--                                   type="number" placeholder="Star" min="0" max="5" step=".01">--}}
+{{--                            <div class="mt-2 text-sm text-gray-500">--}}
+{{--                                Star rating of the vehicle. Numeric. E.g., 4.5. Optional.--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="w-full">
-                            <label class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700" for="review">Review</label>
-                            <input value="{{ old('review') }}" name="review"
-                                   class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                                   type="number" placeholder="Review" min="0" max="5" step=".01">
-                            <div class="mt-2 text-sm text-gray-500">
-                                Review of the vehicle. Numeric. Optional.
-                            </div>
-                        </div>
-                    </div>
+{{--                        <div class="w-full">--}}
+{{--                            <label class="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700" for="review">Review</label>--}}
+{{--                            <input value="{{ old('review') }}" name="review"--}}
+{{--                                   class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"--}}
+{{--                                   type="number" placeholder="Review" min="0" max="5" step=".01">--}}
+{{--                            <div class="mt-2 text-sm text-gray-500">--}}
+{{--                                Review of the vehicle. Numeric. Optional.--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <!-- Submit Button -->
                     <div class="-mx-3 mb-6 flex flex-wrap">

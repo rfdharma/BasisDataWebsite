@@ -20,8 +20,6 @@ class Vehicle extends Model
         'capacity',
         'features',
         'year',
-		'star',
-		'review'
 	];
 
 

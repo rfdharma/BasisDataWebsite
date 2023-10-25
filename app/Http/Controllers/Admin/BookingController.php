@@ -158,7 +158,11 @@ class BookingController extends Controller
 
             if ($returnStatus === 'returned' || $returnStatus === 'expired') {
                 // Hapus record di rental_plates
-                RentalPlate::where('booking_id', $booking->id)->delete();
+                $rentalPlates = RentalPlate::where('booking_id', $booking->id)->get();
+                foreach ($rentalPlates as $rentalPlate) {
+                    $rentalPlate->delete();
+                }
+
 
                 // Tambahkan kembali ke inventory
                 $inventory = Inventories::where('vehicle_id', $booking->vehicle_id)->first();

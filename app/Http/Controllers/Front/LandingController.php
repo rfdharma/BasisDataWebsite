@@ -17,16 +17,19 @@ class LandingController extends Controller
         }
 
         // Fetch the latest vehicle based on your criteria
-        $latestVehicle = Vehicle::with(['type', 'brand','photos'])
-            ->orderBy('created_at', 'desc') // You can adjust this based on your criteria
+        $latestVehicle = Vehicle::with(['type', 'brand', 'photos'])
+            ->whereHas('inventory', function ($query) {
+                $query->where('available', true);
+            })
+            ->orderBy('created_at', 'desc')
             ->first();
+
+
 
         $photos = $latestVehicle->photos;
 
 
         $items = Vehicle::with(['type', 'brand'])
-            ->orderBy('star', 'desc') // Mengurutkan berdasarkan star terbanyak
-            ->take(5)
             ->get();
         $items_landing = Vehicle::with(['type', 'brand'])->get();
 
@@ -48,9 +51,8 @@ class LandingController extends Controller
 
         View::share('notification', $notification);
 
-        $popularVehicles = Vehicle::with(['type', 'brand'])
-            ->orderBy('star', 'desc') // Replace 'popularity_column' with the actual column name you want to use for popularity
-            ->take(4) // Adjust the number of popular vehicles to display
+        $popularVehicles = Vehicle::with(['type', 'brand']) // Replace 'popularity_column' with the actual column name you want to use for popularity
+            ->take(5) // Adjust the number of popular vehicles to display
             ->get();
 
         return view('landing', [

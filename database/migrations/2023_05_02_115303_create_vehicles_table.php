@@ -23,8 +23,6 @@ return new class extends Migration
             $table->integer('capacity');
             $table->text('features');
             $table->integer('year');
-            $table->double('star')->default(0);
-            $table->integer('review')->default(0);
 			$table->softDeletes();
 			$table->timestamps();
 		});

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained();
             $table->foreignId('vehicle_id')->constrained();
             $table->text('plate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
