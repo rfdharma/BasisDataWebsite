@@ -5,7 +5,8 @@
             <a href="{{ route('owner.vehicles.index', $vehicle->id) }}">
                 ←
             </a>
-            List Plate Numbers for {{ $vehicle->name }}
+            {!! __('List Plate Numbers &raquo;') . ' ' . $vehicle->brand->name . ' ' . $vehicle->type->name . ' ' . $vehicle->name !!}
+
         </h2>
     </x-slot>
 

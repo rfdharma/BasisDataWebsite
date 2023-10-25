@@ -2,10 +2,10 @@
     <x-slot name="title">Owner</x-slot>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            <a href="{{ route('owner.vehicles.index') }}" class="text-indigo-600 hover:text-indigo-900">
-                ← Kembali
+            <a href="{{ route('owner.vehicles.index') }}">
+                ←
             </a>
-            {!! __('Type &raquo; Buat') !!}
+            {!! __('Add &raquo; Plate Number &raquo; ') . $vehicle->name !!}
         </h2>
     </x-slot>
 

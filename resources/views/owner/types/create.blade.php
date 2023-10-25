@@ -1,11 +1,11 @@
 <x-app-layout>
-    <x-slot name="title">Admin</x-slot>
+    <x-slot name="title">Create Type Car</x-slot>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            <a href="{{ route('owner.types.index') }}" class="text-indigo-600 hover:text-indigo-900">
-                ← Kembali
+            <a href="{{ route('owner.types.index') }}">
+                ←
             </a>
-            {!! __('Type &raquo; Buat') !!}
+            {!! __('Type &raquo; Create') !!}
         </h2>
     </x-slot>
 

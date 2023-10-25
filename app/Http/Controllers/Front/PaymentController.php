@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Owner\Owner\Front;
+namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Owner\Owner\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Midtrans\Config;

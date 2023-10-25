@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckPassword;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsRole::class,
 //        'checkRole' => \App\Http\Middleware\isAdmin::class,
         'role' => \App\Http\Middleware\Role::class,
+//        'checkpassword'=>CheckPassword::class,
 
     ];
 }

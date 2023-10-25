@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Owner\Owner\API;
 use Midtrans\Config;
 use Midtrans\Notification;
 use App\Models\Booking;
-use App\Http\Controllers\Owner\Owner\Controller;
+use App\Http\Controllers\Controller;
 
 class MidtransCallbackController extends Controller
 {

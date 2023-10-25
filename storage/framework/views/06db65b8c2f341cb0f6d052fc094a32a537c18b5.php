@@ -13,7 +13,8 @@
             <a href="<?php echo e(route('owner.vehicles.index', $vehicle->id)); ?>">
                 ←
             </a>
-            List Plate Numbers for <?php echo e($vehicle->name); ?>
+            <?php echo __('List Plate Numbers &raquo;') . ' ' . $vehicle->brand->name . ' ' . $vehicle->type->name . ' ' . $vehicle->name; ?>
+
 
         </h2>
      <?php $__env->endSlot(); ?>

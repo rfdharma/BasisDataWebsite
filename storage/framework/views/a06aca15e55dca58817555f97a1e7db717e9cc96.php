@@ -139,10 +139,14 @@
                                 </td>
 
                             <?php if($booking->return_status == 'not returned'): ?>
-                                <td class="py-2 px-3"><?php echo e($booking->rentalPlates->first()->plate); ?></td>
+                                <td class="py-2 px-3">
+                                    <?php echo e($booking->rentalPlates->first()?->plate ?? '-'); ?>
+
+                                </td>
                             <?php else: ?>
                                 <td class="py-2 px-3">-</td>
                             <?php endif; ?>
+
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>

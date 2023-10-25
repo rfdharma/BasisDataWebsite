@@ -125,10 +125,13 @@
                                 </td>
 
                             @if($booking->return_status == 'not returned')
-                                <td class="py-2 px-3">{{ $booking->rentalPlates->first()->plate }}</td>
+                                <td class="py-2 px-3">
+                                    {{ $booking->rentalPlates->first()?->plate ?? '-' }}
+                                </td>
                             @else
                                 <td class="py-2 px-3">-</td>
                             @endif
+
                         </tr>
                     @endforeach
                     </tbody>

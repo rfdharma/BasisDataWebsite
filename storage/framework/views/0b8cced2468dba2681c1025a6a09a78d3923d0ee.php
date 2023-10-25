@@ -52,7 +52,11 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="<?php echo e($this->user->profile_photo_url); ?>" alt="<?php echo e($this->user->name); ?>" class="rounded-full h-20 w-20 object-cover">
+                    <?php if(auth()->user()->profile_photo_path): ?>
+                        <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo_path)); ?>" class=" rounded-full w-20 h-20 items-center" alt="Profile Photo">
+                    <?php else: ?>
+                        <img src="<?php echo e(auth()->user()->profile_photo_url); ?>" alt="<?php echo e(auth()->user()->name); ?>" class="rounded-full h-20 w-20 object-cover">
+                    <?php endif; ?>
                 </div>
 
                 <!-- New Profile Photo Preview -->

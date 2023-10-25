@@ -3,9 +3,9 @@
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             <a href="{{ route('owner.vehicles.index') }}">
-                ← Kembali
+                ←
             </a>
-            Edit Kendaraan: {{ $vehicle->name }}
+            {!! __('Vehicle &raquo; Edit &raquo; ') . $vehicle->name !!}
         </h2>
     </x-slot>
 

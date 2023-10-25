@@ -307,7 +307,11 @@
              <?php $__env->slot('trigger', null, []); ?> 
               <?php if(Laravel\Jetstream\Jetstream::managesProfilePhotos()): ?>
                 <button class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
-                  <img class="h-8 w-8 rounded-full object-cover" src="<?php echo e(Auth::user()->profile_photo_url); ?>" alt="<?php echo e(Auth::user()->name); ?>" />
+                    <?php if(auth()->user()->profile_photo_path): ?>
+                        <img src="<?php echo e(asset('storage/' . auth()->user()->profile_photo_path)); ?>" class=" rounded-full w-10 h-10" alt="Profile Photo">
+                    <?php else: ?>
+                        <img src="<?php echo e(auth()->user()->profile_photo_url); ?>" alt="<?php echo e(auth()->user()->name); ?>" class="rounded-full h-10 w-10 object-cover">
+                    <?php endif; ?>
                 </button>
               <?php else: ?>
                 <span class="inline-flex rounded-md">

@@ -61,9 +61,17 @@ class TypeController extends Controller
 
     public function destroy(Type $type)
     {
+        $vehiclesCount = $type->vehicles->count();
+
+        if ($vehiclesCount > 0) {
+            return redirect()->route('owner.types.index')
+                ->with('error', 'Cannot delete the type because it is associated with vehicles.');
+        }
+
         $type->delete();
 
         return redirect()->route('owner.types.index')
             ->with('success', 'Type deleted successfully.');
     }
+
 }

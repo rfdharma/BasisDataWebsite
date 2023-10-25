@@ -1,11 +1,11 @@
 <x-app-layout>
-    <x-slot name="title">Admin</x-slot>
+    <x-slot name="title">Edit Brand Car</x-slot>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             <a href="{{ route('owner.brands.index') }}">
-                ← Kembali
+                ←
             </a>
-            {!! __('Brand &raquo; Sunting &raquo; #') . $brand->id . ' &middot; ' . $brand->name !!}
+            {!! __('Brand &raquo; Edit &raquo; ') . $brand->name !!}
         </h2>
     </x-slot>
 

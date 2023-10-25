@@ -5,7 +5,7 @@
             <a href="#!" onclick="window.history.go(-1); return false;">
                 ←
             </a>
-            {{ __('Vehicle &raquo; Create') }}
+            {!! __('Vehicle &raquo; Create') !!}
         </h2>
     </x-slot>
 

@@ -65,9 +65,17 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
+        $vehicles = $brand->vehicles;
+
+        if ($vehicles->isNotEmpty()) {
+            return redirect()->route('owner.brands.index')
+                ->with('error', 'Cannot delete the brand because it is associated with vehicles.');
+        }
+
         $brand->delete();
 
         return redirect()->route('owner.brands.index')
             ->with('success', 'Brand deleted successfully');
     }
+
 }

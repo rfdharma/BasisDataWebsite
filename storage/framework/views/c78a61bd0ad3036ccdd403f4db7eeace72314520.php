@@ -10,10 +10,10 @@
      <?php $__env->slot('title', null, []); ?> Owner <?php $__env->endSlot(); ?>
      <?php $__env->slot('header', null, []); ?> 
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            <a href="<?php echo e(route('owner.vehicles.index')); ?>" class="text-indigo-600 hover:text-indigo-900">
-                ← Kembali
+            <a href="<?php echo e(route('owner.vehicles.index')); ?>">
+                ←
             </a>
-            <?php echo __('Type &raquo; Buat'); ?>
+            <?php echo __('Add &raquo; Plate Number &raquo; ') . $vehicle->name; ?>
 
         </h2>
      <?php $__env->endSlot(); ?>
