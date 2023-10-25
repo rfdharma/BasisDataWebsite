@@ -17,7 +17,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $userBookings = Booking::with('vehicle')
+        $userBookings = Booking::with('vehicle','rentalPlates')
             ->where('user_id', auth()->user()->id)
             ->latest()->get();
         if (auth()->check()) {
@@ -35,6 +35,7 @@ class OrderController extends Controller
         } else {
             // Handle situasi ketika pengguna tidak diotentikasi atau terjadi kesalahan lainnya
         }
+
         View::share('notification', $notification);
         return view('orders', [
             'userBookings' => $userBookings,

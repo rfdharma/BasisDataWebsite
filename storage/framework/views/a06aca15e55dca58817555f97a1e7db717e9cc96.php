@@ -41,6 +41,7 @@
                         <th class="py-2 px-3 text-center">Booking</th>
                         <th class="py-2 px-3 text-center">Payment</th>
                         <th class="py-2 px-3 text-center">Return</th>
+                        <th class="py-2 px-3 text-center">Plate</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -136,6 +137,12 @@
                                     <?php endif; ?>
 
                                 </td>
+
+                            <?php if($booking->return_status == 'not returned'): ?>
+                                <td class="py-2 px-3"><?php echo e($booking->rentalPlates->first()->plate); ?></td>
+                            <?php else: ?>
+                                <td class="py-2 px-3">-</td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>

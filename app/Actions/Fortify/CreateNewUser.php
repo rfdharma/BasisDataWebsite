@@ -35,14 +35,10 @@ class CreateNewUser implements CreatesNewUsers
             $isOwner = true;
         }
 
-        // Debugging: Dump relevant values
-        dd($input, $isOwner);
 
         // Set the role based on whether the user is an owner
         $role = $isOwner ? 'ADMIN' : 'USER';
 
-        // Debugging: Dump the role
-        dd($role);
 
         // Create the user with the determined role
         return User::create([
