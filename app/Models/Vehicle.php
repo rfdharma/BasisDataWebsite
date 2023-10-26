@@ -48,6 +48,10 @@ class Vehicle extends Model
         return $this->hasMany(CarPlate::class, 'vehicles_id', 'id');
     }
 
+    public function rentalPlates()
+    {
+        return $this->hasMany(RentalPlate::class, 'vehicle_id', 'id');
+    }
 
     public function inventory()
     {

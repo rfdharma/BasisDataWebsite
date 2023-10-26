@@ -43,10 +43,24 @@
                             <td class="py-2 px-3">{{ $booking->id }}</td>
                             <td class="py-2 px-3 text-left">{{ $booking->name }}</td>
                             <td class="py-2 px-3 text-left">
-                                {{ $booking->vehicle->brand->name }}
-                                {{ $booking->vehicle->type->name }}
-                                {{ $booking->vehicle->name }}
+                                @if($booking->vehicle)
+                                    {{ $booking->vehicle->brand->name }}
+                                    {{ $booking->vehicle->type->name }}
+                                    {{ $booking->vehicle->name }}
+                                @else
+                                    @php
+                                        $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                    @endphp
+                                    @if($deletedVehicle)
+                                        {{ $deletedVehicle->brand->name }}
+                                        {{ $deletedVehicle->type->name }}
+                                        {{ $deletedVehicle->name }}
+                                    @else
+                                        Data Kendaraan Tidak Ditemukan
+                                    @endif
+                                @endif
                             </td>
+
 
                             <td class="py-2 px-3">{{ $booking->start_date }}</td>
                             <td class="py-2 px-3">{{ $booking->end_date }}</td>

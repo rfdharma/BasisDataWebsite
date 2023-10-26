@@ -43,14 +43,31 @@
                             <tr>
                                 <td class="text-center px-0 py-2 border-2 text-sm"><?php echo e($booking->id); ?></td>
                                 <td class="text-left px-2 py-2 border-2"><?php echo e($booking->user->name); ?></td>
-                                <td class="text-left px-1 py-4 border-2 text-sm">
-                                    <?php echo e($booking->vehicle->brand->name); ?>
+                                <td class="py-2 px-3 border-2 text-left">
+                                    <?php if($booking->vehicle): ?>
+                                        <?php echo e($booking->vehicle->brand->name); ?>
 
-                                    <?php echo e($booking->vehicle->type->name); ?>
+                                        <?php echo e($booking->vehicle->type->name); ?>
 
-                                    <?php echo e($booking->vehicle->name); ?>
+                                        <?php echo e($booking->vehicle->name); ?>
 
+                                    <?php else: ?>
+                                        <?php
+                                            $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                        ?>
+                                        <?php if($deletedVehicle): ?>
+                                            <?php echo e($deletedVehicle->brand->name); ?>
+
+                                            <?php echo e($deletedVehicle->type->name); ?>
+
+                                            <?php echo e($deletedVehicle->name); ?>
+
+                                        <?php else: ?>
+                                            Data Kendaraan Tidak Ditemukan
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </td>
+
                                 <td class="text-center py-2 px-0 border-2 text-sm"><?php echo e($booking->start_date); ?></td>
                                 <td class="text-center py-2 px-0 border-2 text-sm"><?php echo e($booking->end_date); ?></td>
                                 <td class="text-center py-4 px-0 border-2 text-sm"><?php echo e($booking->address); ?> / <?php echo e($booking->city); ?> / <?php echo e($booking->zip); ?></td>
@@ -97,11 +114,22 @@
                                 </td>
                                 <td class="text-center py-2 px-1 border-2 text-sm"><?php echo e($booking->total_price); ?></td>
                                 <td class="text-center py-2 px-0 border-2">
-                                    <?php if($booking->vehicle->inventory->available == 1): ?>
+                                    <?php if($booking->vehicle && $booking->vehicle->inventory && $booking->vehicle->inventory->available === 1): ?>
                                         True
-                                    <?php else: ?>
+                                    <?php elseif($booking->vehicle): ?>
                                         False
+                                    <?php else: ?>
+                                        <?php
+                                            $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                            $deletedInventory = $deletedVehicle ? $deletedVehicle->inventory : null;
+                                        ?>
+                                        <?php if($deletedInventory && $deletedInventory->available === 1): ?>
+                                            True
+                                        <?php else: ?>
+                                            False
+                                        <?php endif; ?>
                                     <?php endif; ?>
+
                                 </td>
 
                                 <td class="text-center px-1 py-2 border-2">

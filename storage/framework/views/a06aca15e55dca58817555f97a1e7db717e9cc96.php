@@ -51,13 +51,30 @@
                             <td class="py-2 px-3"><?php echo e($booking->id); ?></td>
                             <td class="py-2 px-3 text-left"><?php echo e($booking->name); ?></td>
                             <td class="py-2 px-3 text-left">
-                                <?php echo e($booking->vehicle->brand->name); ?>
+                                <?php if($booking->vehicle): ?>
+                                    <?php echo e($booking->vehicle->brand->name); ?>
 
-                                <?php echo e($booking->vehicle->type->name); ?>
+                                    <?php echo e($booking->vehicle->type->name); ?>
 
-                                <?php echo e($booking->vehicle->name); ?>
+                                    <?php echo e($booking->vehicle->name); ?>
 
+                                <?php else: ?>
+                                    <?php
+                                        $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                    ?>
+                                    <?php if($deletedVehicle): ?>
+                                        <?php echo e($deletedVehicle->brand->name); ?>
+
+                                        <?php echo e($deletedVehicle->type->name); ?>
+
+                                        <?php echo e($deletedVehicle->name); ?>
+
+                                    <?php else: ?>
+                                        Data Kendaraan Tidak Ditemukan
+                                    <?php endif; ?>
+                                <?php endif; ?>
                             </td>
+
 
                             <td class="py-2 px-3"><?php echo e($booking->start_date); ?></td>
                             <td class="py-2 px-3"><?php echo e($booking->end_date); ?></td>

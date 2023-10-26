@@ -94,12 +94,13 @@ class VehiclePlateController extends Controller
             ->first();
 
         if ($carPlate) {
-            $carPlate->delete();
-
-            // Hitung ulang quantity
             $vehicle = Vehicle::find($vehicleId);
             $inventory = $vehicle->inventory;
-            $inventory->calculateQuantity();
+
+            // Decrement the quantity in the inventory
+            $inventory->calculateQuantity(true); // Decrease the quantity by 1
+
+            $carPlate->delete();
 
             return redirect()->route('owner.vehicles.plates.index', $vehicleId)
                 ->with('success', 'Car plate deleted successfully.');
@@ -109,6 +110,7 @@ class VehiclePlateController extends Controller
                 ->with('error', 'Car plate not found.');
         }
     }
+
 
 
 }

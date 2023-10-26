@@ -34,11 +34,25 @@
                             <tr>
                                 <td class="text-center px-0 py-2 border-2 text-sm">{{ $booking->id }}</td>
                                 <td class="text-left px-2 py-2 border-2">{{ $booking->user->name }}</td>
-                                <td class="text-left px-1 py-4 border-2 text-sm">
-                                    {{ $booking->vehicle->brand->name }}
-                                    {{ $booking->vehicle->type->name }}
-                                    {{ $booking->vehicle->name }}
+                                <td class="py-2 px-3 border-2 text-left">
+                                    @if($booking->vehicle)
+                                        {{ $booking->vehicle->brand->name }}
+                                        {{ $booking->vehicle->type->name }}
+                                        {{ $booking->vehicle->name }}
+                                    @else
+                                        @php
+                                            $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                        @endphp
+                                        @if($deletedVehicle)
+                                            {{ $deletedVehicle->brand->name }}
+                                            {{ $deletedVehicle->type->name }}
+                                            {{ $deletedVehicle->name }}
+                                        @else
+                                            Data Kendaraan Tidak Ditemukan
+                                        @endif
+                                    @endif
                                 </td>
+
                                 <td class="text-center py-2 px-0 border-2 text-sm">{{ $booking->start_date }}</td>
                                 <td class="text-center py-2 px-0 border-2 text-sm">{{ $booking->end_date }}</td>
                                 <td class="text-center py-4 px-0 border-2 text-sm">{{ $booking->address }} / {{ $booking->city }} / {{ $booking->zip }}</td>
@@ -85,11 +99,22 @@
                                 </td>
                                 <td class="text-center py-2 px-1 border-2 text-sm">{{ $booking->total_price }}</td>
                                 <td class="text-center py-2 px-0 border-2">
-                                    @if ($booking->vehicle->inventory->available == 1)
+                                    @if ($booking->vehicle && $booking->vehicle->inventory && $booking->vehicle->inventory->available === 1)
                                         True
-                                    @else
+                                    @elseif ($booking->vehicle)
                                         False
+                                    @else
+                                        @php
+                                            $deletedVehicle = App\Models\Vehicle::withTrashed()->find($booking->vehicle_id);
+                                            $deletedInventory = $deletedVehicle ? $deletedVehicle->inventory : null;
+                                        @endphp
+                                        @if ($deletedInventory && $deletedInventory->available === 1)
+                                            True
+                                        @else
+                                            False
+                                        @endif
                                     @endif
+
                                 </td>
 
                                 <td class="text-center px-1 py-2 border-2">

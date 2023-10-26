@@ -24,16 +24,34 @@ class Inventories extends Model
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
 
-    public function calculateQuantity()
+    public function rentalPlates()
+    {
+        return $this->hasMany(RentalPlate::class, 'vehicle_id', 'id');
+    }
+
+
+    public function calculateQuantity($decrement = false)
     {
         $vehicle = $this->vehicle;
+        $rentalPlatesCount = $vehicle->rentalPlates()->withTrashed()->count();
         $carPlatesCount = $vehicle->carPlates()->count();
-        $this->quantity = $carPlatesCount;
 
-        // Mengatur 'available' berdasarkan jumlah quantity
+        if ($decrement) {
+            $this->quantity -= 1;
+        } else {
+            if (is_null($rentalPlatesCount)) {
+                $this->quantity = $carPlatesCount;
+            } else {
+                $this->quantity += 1;
+            }
+        }
+
+        // Set 'available' based on the quantity
         $this->available = $this->quantity > 0;
 
         $this->save();
     }
+
+
 
 }
