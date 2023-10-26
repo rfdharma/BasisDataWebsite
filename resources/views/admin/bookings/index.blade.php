@@ -13,33 +13,35 @@
                     <table class="w-full table-auto border divide-y divide-gray-200 text-center">
                         <thead>
                         <tr>
-                            <th class="px-1 py-2 border-2">Invoice</th>
+                            <th class="px-0 py-2 border-2">Invoice</th>
                             <th class="px-2 py-2 border-2">User</th>
                             <th class="px-1 py-3 border-2">Vehicle</th>
-                            <th class="px-1 py-2 border-2">Start</th>
-                            <th class="px-1 py-2 border-2">End</th>
+                            <th class="px-0 py-2 border-2">Start</th>
+                            <th class="px-0 py-2 border-2">End</th>
+                            <th class="px-1 py-4 border-2">Address / City / Zip</th>
                             <th class="px-[26px] py-3 border-2">Booking</th>
                             <th class="px-[26px] py-3 border-2">Payments</th>
                             <th class="px-[26px] py-3 border-2">Return</th>
                             <th class="px-3 py-2 border-2">Paid</th>
-                            <th class="px-3 py-2 border-2">Available</th>
-                            <th class="px-3 py-2 border-2">Proof</th>
-                            <th class="px-3 py-2 border-2">Plate</th>
+                            <th class="px-1 py-2 border-2">Available</th>
+                            <th class="px-2 py-2 border-2">Proof</th>
+                            <th class="px-2 py-2 border-2">Plate</th>
                             <th class="px-3 py-2 border-2">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($bookings as $booking)
                             <tr>
-                                <td class="text-center px-0 py-2 border-2">{{ $booking->id }}</td>
+                                <td class="text-center px-0 py-2 border-2 text-sm">{{ $booking->id }}</td>
                                 <td class="text-left px-2 py-2 border-2">{{ $booking->user->name }}</td>
-                                <td class="text-left px-1 py-4 border-2">
+                                <td class="text-left px-1 py-4 border-2 text-sm">
                                     {{ $booking->vehicle->brand->name }}
                                     {{ $booking->vehicle->type->name }}
                                     {{ $booking->vehicle->name }}
                                 </td>
-                                <td class="text-center py-2 px-0 border-2">{{ $booking->start_date }}</td>
-                                <td class="text-center py-2 px-0 border-2">{{ $booking->end_date }}</td>
+                                <td class="text-center py-2 px-0 border-2 text-sm">{{ $booking->start_date }}</td>
+                                <td class="text-center py-2 px-0 border-2 text-sm">{{ $booking->end_date }}</td>
+                                <td class="text-center py-4 px-0 border-2 text-sm">{{ $booking->address }} / {{ $booking->city }} / {{ $booking->zip }}</td>
                                 <td class="text-left px-4 py-3 border-2" >
                                     <form method="POST" action="{{ route('admin.bookings.update', $booking->id) }}" onsubmit="return confirm('Are you sure you want to update the data?')">
                                         @csrf
@@ -81,8 +83,8 @@
                                         <option value="expired" {{ $booking->return_status == 'expired' ? 'selected' : '' }}>Expired</option>
                                     </select>
                                 </td>
-                                <td class="text-center py-2 px-1 border-2">{{ $booking->total_price }}</td>
-                                <td class="text-center py-2 px-1 border-2">
+                                <td class="text-center py-2 px-1 border-2 text-sm">{{ $booking->total_price }}</td>
+                                <td class="text-center py-2 px-0 border-2">
                                     @if ($booking->vehicle->inventory->available == 1)
                                         True
                                     @else
@@ -104,7 +106,7 @@
                                     @endif
                                 </td>
 
-                                <td class="text-center py-2 px-2 border-2">
+                                <td class="text-center py-2 px-2 border-2 text-sm">
                                     @foreach ($booking->rentalPlates()->withTrashed()->get() as $rentalPlate)
                                         {{ $rentalPlate->plate }}
                                         <br>

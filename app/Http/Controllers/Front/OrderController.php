@@ -62,6 +62,14 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
+        $notificationMessage = 'Bukti pembayaran berhasil terkirim, menunggu verikasi admin';
+
+        Notification::create([
+            'user_id' => auth()->user()->id,
+            'message' => $notificationMessage,
+            'booking_id' => $booking->id, // You can add a booking reference if needed
+        ]);
+
         $booking->update(['payment_status' => 'verifikasi']);
 
         $request->session()->put('checkout_completed', true);

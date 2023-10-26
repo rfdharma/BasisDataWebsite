@@ -19,9 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('booking_id');
             $table->unsignedBigInteger('user_id');
             $table->text('message');
-            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('booking_id')->references('id')->on('bookings');
+            $table->timestamps();
         });}
     }
 

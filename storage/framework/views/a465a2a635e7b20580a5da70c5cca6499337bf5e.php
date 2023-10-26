@@ -22,27 +22,28 @@
                     <table class="w-full table-auto border divide-y divide-gray-200 text-center">
                         <thead>
                         <tr>
-                            <th class="px-1 py-2 border-2">Invoice</th>
+                            <th class="px-0 py-2 border-2">Invoice</th>
                             <th class="px-2 py-2 border-2">User</th>
                             <th class="px-1 py-3 border-2">Vehicle</th>
-                            <th class="px-1 py-2 border-2">Start</th>
-                            <th class="px-1 py-2 border-2">End</th>
+                            <th class="px-0 py-2 border-2">Start</th>
+                            <th class="px-0 py-2 border-2">End</th>
+                            <th class="px-1 py-4 border-2">Address / City / Zip</th>
                             <th class="px-[26px] py-3 border-2">Booking</th>
                             <th class="px-[26px] py-3 border-2">Payments</th>
                             <th class="px-[26px] py-3 border-2">Return</th>
                             <th class="px-3 py-2 border-2">Paid</th>
-                            <th class="px-3 py-2 border-2">Available</th>
-                            <th class="px-3 py-2 border-2">Proof</th>
-                            <th class="px-3 py-2 border-2">Plate</th>
+                            <th class="px-1 py-2 border-2">Available</th>
+                            <th class="px-2 py-2 border-2">Proof</th>
+                            <th class="px-2 py-2 border-2">Plate</th>
                             <th class="px-3 py-2 border-2">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td class="text-center px-0 py-2 border-2"><?php echo e($booking->id); ?></td>
+                                <td class="text-center px-0 py-2 border-2 text-sm"><?php echo e($booking->id); ?></td>
                                 <td class="text-left px-2 py-2 border-2"><?php echo e($booking->user->name); ?></td>
-                                <td class="text-left px-1 py-4 border-2">
+                                <td class="text-left px-1 py-4 border-2 text-sm">
                                     <?php echo e($booking->vehicle->brand->name); ?>
 
                                     <?php echo e($booking->vehicle->type->name); ?>
@@ -50,8 +51,9 @@
                                     <?php echo e($booking->vehicle->name); ?>
 
                                 </td>
-                                <td class="text-center py-2 px-0 border-2"><?php echo e($booking->start_date); ?></td>
-                                <td class="text-center py-2 px-0 border-2"><?php echo e($booking->end_date); ?></td>
+                                <td class="text-center py-2 px-0 border-2 text-sm"><?php echo e($booking->start_date); ?></td>
+                                <td class="text-center py-2 px-0 border-2 text-sm"><?php echo e($booking->end_date); ?></td>
+                                <td class="text-center py-4 px-0 border-2 text-sm"><?php echo e($booking->address); ?> / <?php echo e($booking->city); ?> / <?php echo e($booking->zip); ?></td>
                                 <td class="text-left px-4 py-3 border-2" >
                                     <form method="POST" action="<?php echo e(route('admin.bookings.update', $booking->id)); ?>" onsubmit="return confirm('Are you sure you want to update the data?')">
                                         <?php echo csrf_field(); ?>
@@ -93,8 +95,8 @@
                                         <option value="expired" <?php echo e($booking->return_status == 'expired' ? 'selected' : ''); ?>>Expired</option>
                                     </select>
                                 </td>
-                                <td class="text-center py-2 px-1 border-2"><?php echo e($booking->total_price); ?></td>
-                                <td class="text-center py-2 px-1 border-2">
+                                <td class="text-center py-2 px-1 border-2 text-sm"><?php echo e($booking->total_price); ?></td>
+                                <td class="text-center py-2 px-0 border-2">
                                     <?php if($booking->vehicle->inventory->available == 1): ?>
                                         True
                                     <?php else: ?>
@@ -116,7 +118,7 @@
                                     <?php endif; ?>
                                 </td>
 
-                                <td class="text-center py-2 px-2 border-2">
+                                <td class="text-center py-2 px-2 border-2 text-sm">
                                     <?php $__currentLoopData = $booking->rentalPlates()->withTrashed()->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rentalPlate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php echo e($rentalPlate->plate); ?>
 

@@ -8,6 +8,7 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
     <div class="container mx-auto py-4">
+
         <?php if($userBookings->isEmpty()): ?>
             <div class="text-center bg-dark rounded-3xl flex flex-col justify-center items-center p-[30px]" style="height: 500px">
                 <header style="margin-bottom: 15px">

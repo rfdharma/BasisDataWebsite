@@ -55,6 +55,7 @@
                     <div>
                         <p tabindex="0" class="text-white text-center text-sm font-bold leading-none">{{ $notif->updated_at }}</p>
                     </div>
+                    <button class="btn text-sm text-dark rounded-3xl p-1 bg-gray-50" onclick="markAsRead({{ $notif->id }})">Read</button>
                     <span class="block w-full border-t border-gray-400 my-4"></span>
                 @endforeach
             @endif
@@ -126,6 +127,7 @@
                                                         <div class="text-white flex focus:outline-none gap-2 mb-1 mt-2 ml-2">
                                                             <div>
                                                                 <p tabindex="0" class="text-sm leading-none">Invoice {{ $notif->booking_id }}</p>
+                                                                <button class="btn text-sm text-dark rounded-3xl p-1 mt-3 bg-gray-50" onclick="markAsRead({{ $notif->id }})">Read</button>
                                                             </div>
                                                             <div class="w-auto">
                                                                 <p tabindex="0" class="text-sm leading-none">{{ $notif->message }}</p>
@@ -210,6 +212,29 @@
 </div>
 
 
+<script>
+    function markAsRead(notificationId) {
+        $.ajax({
+            type: 'DELETE',
+            url: "{{ route('front.notifications.destroy', '') }}" + '/' + notificationId,
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function (response) {
+                // Add the 'hidden' class to trigger the fade-out animation
+                $("#notification-" + notificationId).addClass('hidden');
+
+                // Remove the element from the DOM immediately
+                $("#notification-" + notificationId).remove();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+        location.reload();
+    }
+
+</script>
 
 <script>
     document.getElementById("toggleSidebar").addEventListener("click", function (e) {

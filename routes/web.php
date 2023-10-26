@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\CatalogController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\DetailController;
 use App\Http\Controllers\Front\LandingController;
+use App\Http\Controllers\Front\NotificationController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Owner\RegisterAdminController;
@@ -46,6 +47,7 @@ Route::name('front.')->group(function () {
         })->name('book.success');
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
         Route::post('/orders/{id}', [OrderController::class, 'store'])->name('orders.store');
+        Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     });
 });
