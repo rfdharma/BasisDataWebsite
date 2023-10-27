@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\CarPlate;
+use App\Models\RentalPlate;
 use App\Models\Inventories;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class VehiclePlateController extends Controller
     public function store(Request $request, $vehicleId)
     {
         $request->validate([
-            'plate' => 'required|unique:car_plates|string|max:8',
+            'plate' => 'required|unique:car_plates|string|max:9',
         ]);
 
         $carPlate = new CarPlate([
@@ -67,19 +68,42 @@ class VehiclePlateController extends Controller
 
     public function update(Request $request, $vehicleId, $plate)
     {
+        // Check if the car plate exists in the car_plates table
         $carPlate = CarPlate::where('plate', $plate)
             ->where('vehicles_id', $vehicleId)
             ->first();
 
-        if ($carPlate) {
+        if (!$carPlate) {
+            return redirect()->back()->with('error', 'Car plate not found in car_plates.');
+        }
+
+        // Check if the car plate exists in the rental_plates table (including soft-deleted records)
+        $rentalPlate = RentalPlate::where('plate', $plate)
+            ->where('vehicle_id', $vehicleId)
+            ->first();
+
+        if (!$rentalPlate) {
             $newPlateValue = $request->input('new_plate');
 
+            // Update the car plate with the new value in car_plates
             $carPlate->plate = $newPlateValue;
             $carPlate->save();
 
+            // Check if the car plate exists in the rental_plates table (including soft-deleted records)
+            $rentalPlate = RentalPlate::withTrashed()
+                ->where('plate', $plate)
+                ->where('vehicle_id', $vehicleId)
+                ->first();
+
+            if ($rentalPlate) {
+                // Update the car plate with the new value in rental_plates
+                $rentalPlate->plate = $newPlateValue;
+                $rentalPlate->save();
+            }
+
             return redirect()->back()->with('success', 'Car plate updated successfully.');
         } else {
-            return redirect()->back()->with('error', 'Car plate not found.');
+            return redirect()->back()->with('error', 'Car plates cannot be renewed because they are on lease.');
         }
     }
 
@@ -87,13 +111,26 @@ class VehiclePlateController extends Controller
 
 
 
+
+
     public function destroy($vehicleId, $plate)
     {
+        // Check if the car plate exists in the car_plates table
         $carPlate = CarPlate::where('plate', $plate)
             ->where('vehicles_id', $vehicleId)
             ->first();
 
-        if ($carPlate) {
+        if (!$carPlate) {
+            return redirect()->route('owner.vehicles.plates.index', $vehicleId)
+                ->with('error', 'Car plate not found in car_plates.');
+        }
+
+        // Check if the car plate exists in the rental_plates table (including soft-deleted records)
+        $rentalPlate = RentalPlate::where('plate', $plate)
+            ->where('vehicle_id', $vehicleId)
+            ->first();
+
+        if (!$rentalPlate) {
             $vehicle = Vehicle::find($vehicleId);
             $inventory = $vehicle->inventory;
 
@@ -105,9 +142,8 @@ class VehiclePlateController extends Controller
             return redirect()->route('owner.vehicles.plates.index', $vehicleId)
                 ->with('success', 'Car plate deleted successfully.');
         } else {
-            // Handle the case where the car plate is not found
             return redirect()->route('owner.vehicles.plates.index', $vehicleId)
-                ->with('error', 'Car plate not found.');
+                ->with('error', 'Car plates cannot be deleted because they are on lease.');
         }
     }
 

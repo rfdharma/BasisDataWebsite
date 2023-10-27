@@ -47,6 +47,7 @@ Route::name('front.')->group(function () {
         })->name('book.success');
         Route::get('/orders', [OrderController::class, 'index'])->name('orders');
         Route::post('/orders/{id}', [OrderController::class, 'store'])->name('orders.store');
+        Route::post('/cancel-booking/{id}', [OrderController::class, 'cancelBooking'])->name('cancel.booking');
         Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     });

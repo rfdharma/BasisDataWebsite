@@ -77,9 +77,28 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Pembayaran berhasil dibuat');
     }
 
+    public function cancelBooking($id)
+    {
+        // Find the booking by its ID
+        $booking = Booking::findOrFail($id);
+
+        // Check if the booking status and payment status are both 'pending'
+        if ($booking->status == 'pending' && $booking->payment_status == 'pending') {
+            // Update the booking status and payment status to 'canceled'
+            $booking->update([
+                'status' => 'canceled',
+                'payment_status' => 'canceled',
+            ]);
+
+            // Optionally, you can add a notification or other actions here
+
+            return redirect()->back()->with('success', 'Booking has been canceled successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Booking cannot be canceled at this time.');
+        }
+    }
+
 
 
 
 }
-
-

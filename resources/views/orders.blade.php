@@ -20,6 +20,18 @@
                 </div>
             </div>
         @else
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <h1 class="text-center text-2xl font-bold mb-4">Your Bookings</h1>
             <div class="flex justify-center items-center">
                 <table class="min-w-full bg-white border rounded-lg shadow overflow-hidden text-center">
@@ -35,6 +47,7 @@
                         <th class="py-2 px-3 text-center">Payment</th>
                         <th class="py-2 px-3 text-center">Return</th>
                         <th class="py-2 px-3 text-center">Plate</th>
+                        <th class="py-2 px-3 text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -130,14 +143,14 @@
                                 <td class="py-2 px-3 @if($booking->payment_status == 'success') text-green-500 font-bold @elseif($booking->payment_status == 'failed') text-red-500 font-bold @endif">{{ $booking->payment_status }}</td>
 
                             @endif
-                                <td class="py-2 px-3 @if($booking->return_status == 'not returned') text-red-500 font-bold @endif">
-                                    @if($booking->status != 'done')
-                                        -
-                                    @else
-                                        {{ $booking->return_status }}
-                                    @endif
+                            <td class="py-2 px-3 @if($booking->return_status == 'not returned') text-red-500 font-bold @endif">
+                                @if($booking->status != 'done')
+                                    -
+                                @else
+                                    {{ $booking->return_status }}
+                                @endif
 
-                                </td>
+                            </td>
 
                             @if($booking->return_status == 'not returned')
                                 <td class="py-2 px-3">
@@ -146,6 +159,15 @@
                             @else
                                 <td class="py-2 px-3">-</td>
                             @endif
+                            <td class="py-2 px-3">
+                                @if ($booking->status == 'pending' && $booking->payment_status == 'pending')
+                                    <form action="{{ route('front.cancel.booking', ['id' => $booking->id]) }}" method="POST" onsubmit="return confirm('Yakin cancel sekarang?, setelah dikonfirmasi admin tidak bisa cancel')">
+                                        @csrf
+                                        <button type="submit" class="btn bg-red-500 text-white hover:bg-red-600 rounded">Cancel</button>
+                                    </form>
+                                @endif
+
+                            </td>
 
                         </tr>
                     @endforeach

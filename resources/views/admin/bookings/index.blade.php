@@ -34,7 +34,7 @@
                             <tr>
                                 <td class="text-center px-0 py-2 border-2 text-sm">{{ $booking->id }}</td>
                                 <td class="text-left px-2 py-2 border-2">{{ $booking->user->name }}</td>
-                                <td class="py-2 px-3 border-2 text-left">
+                                <td class="py-2 px-3 border-php border-2 text-left">
                                     @if($booking->vehicle)
                                         {{ $booking->vehicle->brand->name }}
                                         {{ $booking->vehicle->type->name }}
@@ -60,29 +60,31 @@
                                     <form method="POST" action="{{ route('admin.bookings.update', $booking->id) }}" onsubmit="return confirm('Are you sure you want to update the data?')">
                                         @csrf
                                         @method('PUT')
-                                        <select name="status" class="border-0 rounded-3xl block w-full outline-none @if ($booking->status != 'done' && $booking->status != 'failed' && $booking->status != 'confirmed') border-2 border-blue-500 @endif" @if ($booking->status == 'done' || $booking->status == 'failed' || $booking->status == 'confirmed') disabled @endif>
-                                        @if($booking->status == 'confirmed')
-                                            <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                            <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
-                                        @elseif($booking->status == 'pending')
-                                            <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                            <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
-                                        @else
-                                            <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                            <option value="done" {{ $booking->status == 'done' ? 'selected' : '' }}>Done</option>
-                                            <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
-                                        @endif
+                                        <select name="status" class="border-0 rounded-3xl block w-full outline-none @if ($booking->status != 'done' && $booking->status != 'failed' && $booking->status != 'confirmed' && $booking->status != 'canceled') border-2 border-blue-500 @endif" @if ($booking->status == 'done' || $booking->status == 'failed' || $booking->status == 'confirmed' || ($booking->status == 'canceled')) disabled @endif>
+                                            @if($booking->status == 'confirmed')
+                                                <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                                <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
+                                            @elseif($booking->status == 'pending')
+                                                <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                                <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
+                                            @else
+                                                <option value="canceled" {{ $booking->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
+                                                <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                                <option value="done" {{ $booking->status == 'done' ? 'selected' : '' }}>Done</option>
+                                                <option value="failed" {{ $booking->status == 'failed' ? 'selected' : '' }}>Failed</option>
+                                            @endif
                                         </select>
                                 </td>
                                 <td class=" text-left px-4 py-2 border-2">
-                                    <select name="payment_status" class="border-0 rounded-3xl block w-full outline-none @if (($booking->status != 'done' && $booking->status != 'pending' && $booking->payment_status != 'unpaid' && $booking->payment_status != 'failed') || ($booking->status == 'confirmed' && $booking->payment_status != 'unpaid')) border-2 border-blue-500 @endif" @if (($booking->status == 'done' && $booking->payment_status != 'verifikasi') || ($booking->status == 'confirmed' && $booking->payment_status != 'verifikasi') || ($booking->payment_status == 'pending') || ($booking->payment_status == 'failed')) disabled @endif>
+                                    <select name="payment_status" class="border-0 rounded-3xl block w-full outline-none @if (($booking->status != 'done' && $booking->status != 'pending' && $booking->payment_status != 'unpaid' && $booking->payment_status != 'failed' && $booking->payment_status != 'canceled') || ($booking->status == 'confirmed' && $booking->payment_status != 'unpaid')) border-2 border-blue-500 @endif" @if (($booking->status == 'done' && $booking->payment_status != 'verifikasi') || ($booking->status == 'confirmed' && $booking->payment_status != 'verifikasi') || ($booking->payment_status == 'pending') || ($booking->payment_status == 'failed') || ($booking->payment_status == 'canceled')) disabled @endif>
                                         @if($booking->status == 'confirmed' && $booking->payment_status == 'verifikasi')
                                             <option value="verifikasi" {{ $booking->payment_status == 'verifikasi' ? 'selected' : '' }}>Verifikasi</option>
                                             <option value="success" {{ $booking->payment_status == 'success' ? 'selected' : '' }}>Success</option>
                                             <option value="failed" {{ $booking->payment_status == 'failed' ? 'selected' : '' }}>Failed</option>
                                         @else
+                                            <option value="canceled" {{ $booking->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
                                             <option value="pending" {{ $booking->payment_status == 'pending' ? 'selected' : '' }}>Pending</option>
                                             <option value="unpaid" {{ $booking->payment_status == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
                                             <option value="success" {{ $booking->payment_status == 'success' ? 'selected' : '' }}>Success</option>
@@ -159,4 +161,3 @@
         </div>
     </div>
 </x-app-layout>
-
