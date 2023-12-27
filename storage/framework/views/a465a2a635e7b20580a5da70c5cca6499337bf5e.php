@@ -43,7 +43,7 @@
                             <tr>
                                 <td class="text-center px-0 py-2 border-2 text-sm"><?php echo e($booking->id); ?></td>
                                 <td class="text-left px-2 py-2 border-2"><?php echo e($booking->user->name); ?></td>
-                                <td class="py-2 px-3 border-2 text-left">
+                                <td class="py-2 px-3 border-php border-2 text-left">
                                     <?php if($booking->vehicle): ?>
                                         <?php echo e($booking->vehicle->brand->name); ?>
 
@@ -75,29 +75,31 @@
                                     <form method="POST" action="<?php echo e(route('admin.bookings.update', $booking->id)); ?>" onsubmit="return confirm('Are you sure you want to update the data?')">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('PUT'); ?>
-                                        <select name="status" class="border-0 rounded-3xl block w-full outline-none <?php if($booking->status != 'done' && $booking->status != 'failed' && $booking->status != 'confirmed'): ?> border-2 border-blue-500 <?php endif; ?>" <?php if($booking->status == 'done' || $booking->status == 'failed' || $booking->status == 'confirmed'): ?> disabled <?php endif; ?>>
-                                        <?php if($booking->status == 'confirmed'): ?>
-                                            <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
-                                            <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
-                                        <?php elseif($booking->status == 'pending'): ?>
-                                            <option value="pending" <?php echo e($booking->status == 'pending' ? 'selected' : ''); ?>>Pending</option>
-                                            <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
-                                            <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
-                                        <?php else: ?>
-                                            <option value="pending" <?php echo e($booking->status == 'pending' ? 'selected' : ''); ?>>Pending</option>
-                                            <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
-                                            <option value="done" <?php echo e($booking->status == 'done' ? 'selected' : ''); ?>>Done</option>
-                                            <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
-                                        <?php endif; ?>
+                                        <select name="status" class="border-0 rounded-3xl block w-full outline-none <?php if($booking->status != 'done' && $booking->status != 'failed' && $booking->status != 'confirmed' && $booking->status != 'canceled'): ?> border-2 border-blue-500 <?php endif; ?>" <?php if($booking->status == 'done' || $booking->status == 'failed' || $booking->status == 'confirmed' || ($booking->status == 'canceled')): ?> disabled <?php endif; ?>>
+                                            <?php if($booking->status == 'confirmed'): ?>
+                                                <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
+                                                <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
+                                            <?php elseif($booking->status == 'pending'): ?>
+                                                <option value="pending" <?php echo e($booking->status == 'pending' ? 'selected' : ''); ?>>Pending</option>
+                                                <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
+                                                <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
+                                            <?php else: ?>
+                                                <option value="canceled" <?php echo e($booking->status == 'canceled' ? 'selected' : ''); ?>>Canceled</option>
+                                                <option value="pending" <?php echo e($booking->status == 'pending' ? 'selected' : ''); ?>>Pending</option>
+                                                <option value="confirmed" <?php echo e($booking->status == 'confirmed' ? 'selected' : ''); ?>>Confirmed</option>
+                                                <option value="done" <?php echo e($booking->status == 'done' ? 'selected' : ''); ?>>Done</option>
+                                                <option value="failed" <?php echo e($booking->status == 'failed' ? 'selected' : ''); ?>>Failed</option>
+                                            <?php endif; ?>
                                         </select>
                                 </td>
                                 <td class=" text-left px-4 py-2 border-2">
-                                    <select name="payment_status" class="border-0 rounded-3xl block w-full outline-none <?php if(($booking->status != 'done' && $booking->status != 'pending' && $booking->payment_status != 'unpaid' && $booking->payment_status != 'failed') || ($booking->status == 'confirmed' && $booking->payment_status != 'unpaid')): ?> border-2 border-blue-500 <?php endif; ?>" <?php if(($booking->status == 'done' && $booking->payment_status != 'verifikasi') || ($booking->status == 'confirmed' && $booking->payment_status != 'verifikasi') || ($booking->payment_status == 'pending') || ($booking->payment_status == 'failed')): ?> disabled <?php endif; ?>>
+                                    <select name="payment_status" class="border-0 rounded-3xl block w-full outline-none <?php if(($booking->status != 'done' && $booking->status != 'pending' && $booking->payment_status != 'unpaid' && $booking->payment_status != 'failed' && $booking->payment_status != 'canceled') || ($booking->status == 'confirmed' && $booking->payment_status != 'unpaid')): ?> border-2 border-blue-500 <?php endif; ?>" <?php if(($booking->status == 'done' && $booking->payment_status != 'verifikasi') || ($booking->status == 'confirmed' && $booking->payment_status != 'verifikasi') || ($booking->payment_status == 'pending') || ($booking->payment_status == 'failed') || ($booking->payment_status == 'canceled')): ?> disabled <?php endif; ?>>
                                         <?php if($booking->status == 'confirmed' && $booking->payment_status == 'verifikasi'): ?>
                                             <option value="verifikasi" <?php echo e($booking->payment_status == 'verifikasi' ? 'selected' : ''); ?>>Verifikasi</option>
                                             <option value="success" <?php echo e($booking->payment_status == 'success' ? 'selected' : ''); ?>>Success</option>
                                             <option value="failed" <?php echo e($booking->payment_status == 'failed' ? 'selected' : ''); ?>>Failed</option>
                                         <?php else: ?>
+                                            <option value="canceled" <?php echo e($booking->status == 'canceled' ? 'selected' : ''); ?>>Canceled</option>
                                             <option value="pending" <?php echo e($booking->payment_status == 'pending' ? 'selected' : ''); ?>>Pending</option>
                                             <option value="unpaid" <?php echo e($booking->payment_status == 'unpaid' ? 'selected' : ''); ?>>Unpaid</option>
                                             <option value="success" <?php echo e($booking->payment_status == 'success' ? 'selected' : ''); ?>>Success</option>
@@ -109,7 +111,6 @@
                                     <select name="return_status" class="border-0 rounded-3xl block w-full outline-none <?php if($booking->status == 'done' && $booking->return_status == 'not returned'): ?> border-2 border-blue-500 <?php endif; ?>" <?php if($booking->status != 'done' || $booking->return_status != 'not returned'): ?> disabled <?php endif; ?>>
                                         <option value="not returned" <?php echo e($booking->return_status == 'not returned' ? 'selected' : ''); ?>>Not Returned</option>
                                         <option value="returned" <?php echo e($booking->return_status == 'returned' ? 'selected' : ''); ?>>Returned</option>
-                                        <option value="expired" <?php echo e($booking->return_status == 'expired' ? 'selected' : ''); ?>>Expired</option>
                                     </select>
                                 </td>
                                 <td class="text-center py-2 px-1 border-2 text-sm"><?php echo e($booking->total_price); ?></td>
@@ -180,5 +181,4 @@
 <?php $component = $__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da; ?>
 <?php unset($__componentOriginal8e2ce59650f81721f93fef32250174d77c3531da); ?>
 <?php endif; ?>
-
 <?php /**PATH C:\xampp\htdocs\Github\rent-car\resources\views/admin/bookings/index.blade.php ENDPATH**/ ?>

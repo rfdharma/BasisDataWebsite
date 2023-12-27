@@ -28,6 +28,20 @@
                 </div>
             </div>
         <?php else: ?>
+            <?php if(session('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo e(session('success')); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
+                <div class="alert alert-danger">
+                    <?php echo e(session('error')); ?>
+
+                </div>
+            <?php endif; ?>
+
             <h1 class="text-center text-2xl font-bold mb-4">Your Bookings</h1>
             <div class="flex justify-center items-center">
                 <table class="min-w-full bg-white border rounded-lg shadow overflow-hidden text-center">
@@ -43,6 +57,7 @@
                         <th class="py-2 px-3 text-center">Payment</th>
                         <th class="py-2 px-3 text-center">Return</th>
                         <th class="py-2 px-3 text-center">Plate</th>
+                        <th class="py-2 px-3 text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -146,15 +161,15 @@
                                 <td class="py-2 px-3 <?php if($booking->payment_status == 'success'): ?> text-green-500 font-bold <?php elseif($booking->payment_status == 'failed'): ?> text-red-500 font-bold <?php endif; ?>"><?php echo e($booking->payment_status); ?></td>
 
                             <?php endif; ?>
-                                <td class="py-2 px-3 <?php if($booking->return_status == 'not returned'): ?> text-red-500 font-bold <?php endif; ?>">
-                                    <?php if($booking->status != 'done'): ?>
-                                        -
-                                    <?php else: ?>
-                                        <?php echo e($booking->return_status); ?>
+                            <td class="py-2 px-3 <?php if($booking->return_status == 'not returned'): ?> text-red-500 font-bold <?php endif; ?>">
+                                <?php if($booking->status != 'done'): ?>
+                                    -
+                                <?php else: ?>
+                                    <?php echo e($booking->return_status); ?>
 
-                                    <?php endif; ?>
+                                <?php endif; ?>
 
-                                </td>
+                            </td>
 
                             <?php if($booking->return_status == 'not returned'): ?>
                                 <td class="py-2 px-3">
@@ -164,6 +179,15 @@
                             <?php else: ?>
                                 <td class="py-2 px-3">-</td>
                             <?php endif; ?>
+                            <td class="py-2 px-3">
+                                <?php if($booking->status == 'pending' && $booking->payment_status == 'pending'): ?>
+                                    <form action="<?php echo e(route('front.cancel.booking', ['id' => $booking->id])); ?>" method="POST" onsubmit="return confirm('Yakin cancel sekarang?, setelah dikonfirmasi admin tidak bisa cancel')">
+                                        <?php echo csrf_field(); ?>
+                                        <button type="submit" class="btn bg-red-500 text-white hover:bg-red-600 rounded">Cancel</button>
+                                    </form>
+                                <?php endif; ?>
+
+                            </td>
 
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

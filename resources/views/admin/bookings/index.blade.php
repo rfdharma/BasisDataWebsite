@@ -96,7 +96,6 @@
                                     <select name="return_status" class="border-0 rounded-3xl block w-full outline-none @if ($booking->status == 'done' && $booking->return_status == 'not returned') border-2 border-blue-500 @endif" @if ($booking->status != 'done' || $booking->return_status != 'not returned') disabled @endif>
                                         <option value="not returned" {{ $booking->return_status == 'not returned' ? 'selected' : '' }}>Not Returned</option>
                                         <option value="returned" {{ $booking->return_status == 'returned' ? 'selected' : '' }}>Returned</option>
-                                        <option value="expired" {{ $booking->return_status == 'expired' ? 'selected' : '' }}>Expired</option>
                                     </select>
                                 </td>
                                 <td class="text-center py-2 px-1 border-2 text-sm">{{ $booking->total_price }}</td>

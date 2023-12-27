@@ -170,8 +170,8 @@
                                              x-transition:leave="transition ease-in duration-100"
                                              x-transition:leave-start="opacity-100 scale-100"
                                              x-transition:leave-end="opacity-0 scale-90"
-                                             class="z-50 absolute right-0 w-64 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg sm:w-80 dark:bg-gray-800">
-                                            <div class="text-center text-white py-2 inline-block gap-2" style="width: 100px">
+                                             class="z-50 absolute right-0 w-64 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg sm:w-80 dark:bg-gray-800" style="width: 100px;">
+                                            <div class="text-center text-white py-2 block gap-2 ">
                                                 <a class="px-2 nav-link-item text-sm" style="color: white" href="<?php echo e(route('profile.show')); ?>">Edit Profile</a>
                                                 <span class="block w-full border-t border-gray-400" style="margin-top: 5px;margin-bottom: 5px"></span>
                                                 <form method="POST" action="<?php echo e(route('logout')); ?>">
