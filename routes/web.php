@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\NotificationController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Owner\DRentalController;
 use App\Http\Controllers\Owner\RegisterAdminController;
 use App\Http\Controllers\Owner\RoleAdminController;
 use App\Http\Controllers\Owner\VehiclePlateController;
@@ -59,7 +60,8 @@ Route::prefix('owner')->name('owner.')->middleware([
 	'verified',
 	'admin'
 ])->group(function () {
-	Route::get('/dashboard', [OwnerDashboardController::class, 'index'])->name('dashboard');
+	Route::get('/dashboard-inventaris', [OwnerDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard-rental', [DRentalController::class, 'index'])->name('dashboard_rental');
 	Route::resource('brands', OwnerBrandController::class);
 	Route::resource('types', OwnerTypeController::class);
 	Route::resource('vehicles', OwnerItemController::class);

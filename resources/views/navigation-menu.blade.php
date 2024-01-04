@@ -31,8 +31,33 @@
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                   <x-jet-nav-link href="{{ route('owner.dashboard') }}" :active="request()->routeIs('owner.dashboard')">
-                      {{ __('Dashboard') }}
+                      {{ __('Inventaris') }}
                   </x-jet-nav-link>
+
+                  <x-jet-nav-link href="{{ route('owner.dashboard_rental') }}" :active="request()->routeIs('owner.dashboard_rental')">
+                      {{ __('Rental') }}
+                  </x-jet-nav-link>
+
+
+
+{{--                  <x-jet-dropdown>--}}
+{{--                      <x-slot name="trigger">--}}
+{{--                          <x-jet-nav-link :active="request()->routeIs('owner.dashboard')">--}}
+{{--                              {{ __('Dashboard') }}--}}
+{{--                          </x-jet-nav-link>--}}
+{{--                      </x-slot>--}}
+
+{{--                      <x-slot name="content">--}}
+{{--                          <x-jet-dropdown-link href="{{ route('owner.dashboard') }}">--}}
+{{--                              {{ __('Inventaris') }}--}}
+{{--                          </x-jet-dropdown-link>--}}
+
+{{--                          <x-jet-dropdown-link href="{{ route('owner.dashboard_rental') }}">--}}
+{{--                              {{ __('Rental') }}--}}
+{{--                          </x-jet-dropdown-link>--}}
+{{--                      </x-slot>--}}
+{{--                  </x-jet-dropdown>--}}
+
                   <x-jet-nav-link href="{{ route('owner.brands.index') }}" :active="request()->routeIs('owner.brands.index')">
                       {{ __('Brands') }}
                   </x-jet-nav-link>
